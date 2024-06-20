@@ -29,8 +29,8 @@ export const createAlbum = async (albumData) => {
   try {
     const fd = new FormData()
     fd.append('title', albumData.title)
-    fd.append('artist_id ', albumData.artist_id)
-    fd.append('image_file ', albumData.image_file)
+    fd.append('artist_id', albumData.artist_id)
+    fd.append('image_file', albumData.image_file)
 
     const response = await axios.post(`${API_URL + ENDPOINT}`, fd)
     if (response.status === 422) throw new Error('Bad album data')
