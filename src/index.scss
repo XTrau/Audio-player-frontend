@@ -1,0 +1,245 @@
+* {
+  font-family: 'Roboto', 'DM Sans', sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+li {
+  list-style: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: inherit;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border: none;
+}
+
+.play-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  transition: background 0.1s ease-in-out;
+
+  span {
+    &.play-img {
+      border: 10px solid transparent;
+      border-left: 20px solid rgb(181, 181, 181);
+      transform: translateX(25%);
+      width: 0;
+      height: 0;
+    }
+
+    &.pause-img {
+      display: block;
+      height: 20px;
+      width: 14px;
+      border-left: 4px solid rgb(181, 181, 181);
+      border-right: 4px solid rgb(181, 181, 181);
+    }
+  }
+
+  &:hover {
+    border: none;
+    outline: none;
+
+    span {
+      &.play-img {
+        border-left: 20px solid rgb(255, 255, 255);
+      }
+
+      &.pause-img {
+        border-left: 3px solid rgb(255, 255, 255);
+        border-right: 3px solid rgb(255, 255, 255);
+      }
+    }
+  }
+}
+
+.three-dot-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  transition: background 0.1s ease-in-out;
+
+  &:hover {
+    background: black;
+
+    .three-dot {
+      background: white;
+
+      &::before {
+        content: '';
+        background: white;
+      }
+
+      &::after {
+        content: '';
+        background: white;
+      }
+    }
+  }
+
+  .three-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #d2d2d2;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      background: rgb(210, 210, 210);
+      border-radius: 50%;
+      transform: translateY(-150%);
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      background: rgb(210, 210, 210);
+      border-radius: 50%;
+      transform: translateY(50%);
+    }
+  }
+}
+
+.submit-btn {
+  width: 100%;
+  color: white;
+  background: linear-gradient(135deg, #7a7af5, #00a4be);
+  padding: 15px 0;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+
+  &:hover {
+    background: linear-gradient(135deg, #7a7af5, #00a4be);
+  }
+}
+
+.author-image {
+  height: 70px;
+  width: 70px;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+form {
+  .find-author {
+    position: relative;
+    text-align: center;
+    margin-bottom: 1rem;
+    z-index: 2;
+
+    .search-result {
+      z-index: 2;
+      position: absolute;
+      top: 105%;
+      width: 100%;
+      height: min-content;
+      border-radius: 0.5rem;
+      overflow: hidden;
+
+      .search-item {
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: 0.2rem;
+
+        p {
+          font-weight: 500;
+          margin-left: 0.5rem;
+        }
+
+        &:hover {
+          background: #c2c2c2;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .selected-author {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    margin: 10px 0;
+    background: white;
+    display: flex;
+
+    .delete-btn {
+      color: white;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: min-content;
+      width: 1.5rem;
+      border-radius: 0 10px 0 10px;
+      background: #d20000;
+      padding: 0.2rem;
+
+      &:hover {
+        background: #ff0000;
+      }
+    }
+
+    img {
+      width: 75px;
+      height: 75px;
+      object-fit: cover;
+    }
+  }
+}
+
+.overlay {
+  z-index: 4;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  height: 300px;
+}
+
+.hide-text {
+  font-size: 0;
+}

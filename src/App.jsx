@@ -1,11 +1,16 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { getTracks } from './services/trackService'
 
 import {
   changeTrackList,
   changeFullTrackList,
 } from './store/slices/trackListReducer'
+
+import TrackController from './components/TrackController/TrackController'
+
+import './index.scss'
 
 function App() {
   const dispatch = useDispatch()
@@ -25,12 +30,14 @@ function App() {
     fetchTracks()
   }, [])
 
-	const trackList = useSelector((store) => store.currentTrack.fullTrackList);
-	console.log(trackList)
+  const trackList = useSelector((store) => store.currentTrack.fullTrackList)
+  console.log(trackList)
 
   return (
     <>
-      <div></div>
+      <div>
+        <TrackController />
+      </div>
     </>
   )
 }
