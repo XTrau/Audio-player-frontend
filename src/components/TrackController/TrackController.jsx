@@ -69,8 +69,8 @@ function TrackController() {
     <nav className="track-controller">
       <audio
         src={
-          currentTrack.audio_url
-            ? `${API_URL + FILE_ENDPOINT}/${currentTrack.audio_url}`
+          currentTrack.audio_file_name
+            ? `${API_URL + FILE_ENDPOINT}/${currentTrack.audio_file_name}`
             : ''
         }
         onEnded={() => dispatch(toNextTrack())}
@@ -105,8 +105,8 @@ function TrackController() {
       <div className="track-info">
         <img
           src={
-            currentTrack.image_url
-              ? `${API_URL + FILE_ENDPOINT}/${currentTrack.image_url}`
+            currentTrack.audio_file_name
+              ? `${API_URL + FILE_ENDPOINT}/${currentTrack.audio_file_name}`
               : `${API_URL + FILE_ENDPOINT}/music.png`
           }
           alt=""
