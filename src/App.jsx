@@ -28,9 +28,9 @@ function App() {
     }
 
     fetchTracks()
-  }, [])
+  }, [dispatch])
 
-  const trackList = useSelector((store) => store.currentTrack.fullTrackList)
+  const trackList = useSelector(store => store.trackList.trackList)
   console.log(trackList)
 
   return (

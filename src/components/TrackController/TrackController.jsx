@@ -10,8 +10,8 @@ import { API_URL, FILE_ENDPOINT } from '../../config'
 import './TrackController.scss'
 
 function TrackController() {
-  const currentTrack = useSelector((store) => store.currentTrack.track)
-  const paused = useSelector((store) => store.currentTrack.paused)
+  const currentTrack = useSelector((store) => store.trackList.track)
+  const paused = useSelector((store) => store.trackList.paused)
 
   const [trackTime, setTrackTime] = useState(0)
   const [currentTime, setCurrentTime] = useState('00:00')

@@ -3,7 +3,7 @@ import trackListReducer from './slices/trackListReducer'
 
 const store = configureStore({
   reducer: {
-    currentTrack: trackListReducer,
+    trackList: trackListReducer,
   },
 })
 
