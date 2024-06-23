@@ -3,12 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { getTracks } from './services/trackService'
 
-import {
-  changeTrackList,
-  changeFullTrackList,
-} from './store/slices/trackListReducer'
+import { changeTrackList } from './store/slices/trackListReducer'
 
 import TrackController from './components/TrackController/TrackController'
+import Track from './components/Track/Track'
 
 import './index.scss'
 
@@ -20,7 +18,6 @@ function App() {
       try {
         const tracks = await getTracks()
         if (!tracks) throw Error('Failed to get tracks')
-        dispatch(changeFullTrackList(tracks))
         dispatch(changeTrackList(tracks))
       } catch (error) {
         console.error(error)
@@ -30,14 +27,15 @@ function App() {
     fetchTracks()
   }, [dispatch])
 
-  const trackList = useSelector(store => store.trackList.trackList)
+  const trackList = useSelector((store) => store.trackList.trackList)
   console.log(trackList)
 
   return (
     <>
       <div>
-        <TrackController />
+        {trackList.map((track, index) => <Track track={track} key={track.id} currentList={trackList} index={index}/>)}
       </div>
+      <TrackController />
     </>
   )
 }
