@@ -104,17 +104,21 @@ function TrackController() {
 
       <div className="track-info">
         <img
-          src={
+          src={`${API_URL + FILE_ENDPOINT}/${
             currentTrack.audio_file_name
-              ? `${API_URL + FILE_ENDPOINT}/${currentTrack.audio_file_name}`
-              : `${API_URL + FILE_ENDPOINT}/music.png`
-          }
+              ? currentTrack.audio_file_name
+              : 'music.png'
+          }`}
           alt=""
           width={70}
           height={70}
         />
         <div className="track-description">
           <h2>{currentTrack.title}</h2>
+          <div>
+            {currentTrack.artists &&
+              currentTrack.artists.map((artist) => artist.name).join(', ')}
+          </div>
         </div>
       </div>
 
