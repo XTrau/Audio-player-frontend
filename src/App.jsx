@@ -7,6 +7,7 @@ import { changeTrackList } from './store/slices/trackListReducer'
 
 import TrackController from './components/TrackController/TrackController'
 import Track from './components/Track/Track'
+import Header from './components/Header/Header'
 
 import './index.scss'
 
@@ -32,9 +33,19 @@ function App() {
 
   return (
     <>
-      <div>
-        {trackList.map((track, index) => <Track track={track} key={track.id} currentList={trackList} index={index}/>)}
-      </div>
+      <Header />
+      <main>
+        <div className="main-wrapper">
+          {trackList.map((track, index) => (
+            <Track
+              track={track}
+              key={track.id}
+              currentList={trackList}
+              index={index}
+            />
+          ))}
+        </div>
+      </main>
       <TrackController />
     </>
   )
