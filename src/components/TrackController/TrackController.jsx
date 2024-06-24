@@ -105,8 +105,8 @@ function TrackController() {
       <div className="track-info">
         <img
           src={`${API_URL + FILE_ENDPOINT}/${
-            currentTrack.audio_file_name
-              ? currentTrack.audio_file_name
+            currentTrack.image_file_name
+              ? currentTrack.image_file_name
               : 'music.png'
           }`}
           alt=""
