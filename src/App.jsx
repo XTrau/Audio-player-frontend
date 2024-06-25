@@ -29,14 +29,16 @@ function App() {
   }, [dispatch])
 
   const trackList = useSelector((store) => store.trackList.trackList)
-  console.log(trackList)
 
   return (
     <>
       <Header />
       <main>
         <div className="main-wrapper">
-          <TrackList trackList={trackList} />
+          <div className="main-tracklist">
+            <h2>Музыка</h2>
+            <TrackList trackList={trackList} />
+          </div>
         </div>
       </main>
       <TrackController />
