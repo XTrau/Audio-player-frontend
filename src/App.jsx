@@ -1,13 +1,15 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { getTracks } from './services/trackService'
 
 import { changeTrackList } from './store/slices/trackListReducer'
 
-import TrackController from './components/TrackController/TrackController'
-import TrackList from './components/TrackList/TrackList'
-import Header from './components/Header/Header'
+import Layout from './components/Layout/Layout'
+
+import { Routes, Route } from 'react-router-dom'
+
+import Main from './pages/Main/Main'
 
 import './index.scss'
 
@@ -24,24 +26,19 @@ function App() {
         console.error(error)
       }
     }
-
     fetchTracks()
   }, [dispatch])
 
-  const trackList = useSelector((store) => store.trackList.trackList)
-
   return (
     <>
-      <Header />
-      <main>
-        <div className="main-wrapper">
-          <div className="main-tracklist">
-            <h2>Музыка</h2>
-            <TrackList trackList={trackList} />
-          </div>
-        </div>
-      </main>
-      <TrackController />
+      <Layout>
+        <Routes>
+          <Route
+            path="/"
+            element={<Main />}
+          />
+        </Routes>
+      </Layout>
     </>
   )
 }
