@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   toNextTrack,
@@ -21,14 +21,39 @@ function TrackController() {
   const dispatch = useDispatch()
   const audioRef = useRef()
 
-  useEffect(() => {
-    audioRef.current.volume = (volume / 100).toFixed(2)
-  }, [volume, audioRef])
+  const playPause = useCallback(() => {
+    if (audioRef.current.paused) {
+      dispatch(playTrack())
+    } else {
+      dispatch(pauseTrack())
+    }
+  }, [dispatch])
+
+  const nextSong = useCallback(() => {
+    dispatch(toNextTrack())
+  }, [dispatch])
+
+  const prevSong = useCallback(() => {
+    dispatch(toPrevTrack())
+  }, [dispatch])
 
   useEffect(() => {
     if (paused) audioRef.current?.pause()
     else audioRef.current?.play()
   }, [paused, currentTrack])
+
+  useEffect(() => {
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.setActionHandler('play', playPause)
+      navigator.mediaSession.setActionHandler('pause', playPause)
+      navigator.mediaSession.setActionHandler('previoustrack', prevSong)
+      navigator.mediaSession.setActionHandler('nexttrack', nextSong)
+    }
+  }, [playPause, nextSong, prevSong])
+
+  useEffect(() => {
+    audioRef.current.volume = (volume / 100).toFixed(2)
+  }, [volume, audioRef])
 
   const updateTrackTime = () => {
     setTrackTime(
@@ -81,21 +106,19 @@ function TrackController() {
 
       <div className="controls">
         <button
-          onClick={() => dispatch(toPrevTrack())}
+          onClick={prevSong}
           className="left-next hide-text"
         >
           <span>previous track</span>
         </button>
         <button
           className="play-btn hide-text"
-          onClick={() => {
-            paused ? dispatch(playTrack()) : dispatch(pauseTrack())
-          }}
+          onClick={playPause}
         >
           <span className={paused ? 'play-img' : 'pause-img'}>play</span>
         </button>
         <button
-          onClick={() => dispatch(toNextTrack())}
+          onClick={nextSong}
           className="right-next hide-text"
         >
           <span>next track</span>
