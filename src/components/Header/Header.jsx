@@ -21,7 +21,7 @@ function Header() {
           <Link to="add_artist">
             <span>Add Artist</span>
           </Link>
-          <Link to="add_track">
+          <Link to="add_album">
             <span>Add Album</span>
           </Link>
         </nav>
