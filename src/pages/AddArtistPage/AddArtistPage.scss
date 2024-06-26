@@ -1,0 +1,47 @@
+.add-artist-wrapper {
+  h2 {
+    text-align: center;
+  }
+
+  display: flex;
+  flex-direction: column;
+}
+
+.add-artist {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem;
+}
+
+.add-artist__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8rem;
+
+  .text-input {
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid black;
+  }
+
+  button {
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: 0.5rem;
+    padding: 0.4rem;
+    background: rgb(171, 171, 171);
+
+    &:active {
+      background: rgb(163, 163, 163);
+    }
+  }
+}
+
+.add-artist__artist-image {
+  background-size: cover;
+  border-radius: 0.5rem;
+  width: 200px;
+  height: 200px;
+}

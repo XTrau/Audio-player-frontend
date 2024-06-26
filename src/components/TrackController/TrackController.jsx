@@ -31,10 +31,12 @@ function TrackController() {
 
   const nextSong = useCallback(() => {
     dispatch(toNextTrack())
+    dispatch(playTrack())
   }, [dispatch])
 
   const prevSong = useCallback(() => {
     dispatch(toPrevTrack())
+    dispatch(playTrack())
   }, [dispatch])
 
   useEffect(() => {

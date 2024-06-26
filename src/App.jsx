@@ -9,7 +9,8 @@ import Layout from './components/Layout/Layout'
 
 import { Routes, Route } from 'react-router-dom'
 
-import Main from './pages/Main/Main'
+import Main from './pages/MainPage/MainPage'
+import AddArtistPage from './pages/AddArtistPage/AddArtistPage'
 
 import './index.scss'
 
@@ -36,6 +37,10 @@ function App() {
           <Route
             path="/"
             element={<Main />}
+          />
+          <Route
+            path="/add_artist"
+            element={<AddArtistPage />}
           />
         </Routes>
       </Layout>
