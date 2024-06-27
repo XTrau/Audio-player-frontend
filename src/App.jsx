@@ -11,6 +11,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import Main from './pages/MainPage/MainPage'
 import AddArtistPage from './pages/AddArtistPage/AddArtistPage'
+import AddAlbumPage from './pages/AddAlbumPage/AddAlbumPage'
 
 import './index.scss'
 
@@ -41,6 +42,10 @@ function App() {
           <Route
             path="/add_artist"
             element={<AddArtistPage />}
+          />
+          <Route
+            path="/add_album"
+            element={<AddAlbumPage />}
           />
         </Routes>
       </Layout>
