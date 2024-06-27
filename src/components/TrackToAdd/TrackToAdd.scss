@@ -1,0 +1,47 @@
+.add-track {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.add-track__image {
+  width: 175px;
+  height: 175px;
+  background-size: cover;
+}
+
+.add-track__input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mini-artist {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding-right: 0.3rem;
+  color: white;
+  background: rgb(39, 39, 95);
+  overflow: hidden;
+  border-radius: 0.5rem 0 0.5rem 0;
+}
+
+.mini-artist__image {
+  background-size: cover;
+}
+
+.mini-artist-list {
+  display: flex;
+}
+
+.add-track__buttons {
+  display: flex;
+  gap: 1rem;
+  .btn {
+    font-size: 1rem;
+    background: rgb(194, 194, 255);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+}
