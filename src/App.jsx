@@ -1,10 +1,3 @@
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-
-import { getTracks } from './services/trackService'
-
-import { changeTrackList } from './store/slices/trackListReducer'
-
 import Layout from './components/Layout/Layout'
 
 import { Routes, Route } from 'react-router-dom'
@@ -16,21 +9,6 @@ import AddAlbumPage from './pages/AddAlbumPage/AddAlbumPage'
 import './index.scss'
 
 function App() {
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    const fetchTracks = async () => {
-      try {
-        const tracks = await getTracks()
-        if (!tracks) throw Error('Failed to get tracks')
-        dispatch(changeTrackList(tracks))
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchTracks()
-  }, [dispatch])
-
   return (
     <>
       <Layout>
