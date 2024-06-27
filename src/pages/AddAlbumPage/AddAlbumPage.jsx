@@ -35,35 +35,24 @@ function AddAlbumPage() {
   const [albumImage, setAlbumImage] = useState(null)
 
   const [onArtistSearchFocused, setOnArtistSearchFocused] = useState(false)
+
   const [artistPage, setArtistPage] = useState(0)
+  const [canFetchArtists, setCanFetchArtists] = useState(true)
 
   useEffect(() => {
     const fetchArtists = async () => {
-      const artists_data = await getArtists()
-      shuffleArtists(artists_data)
+      const artists_data = await getArtists(artistPage, 20)
+      if (artists_data.length < 20) setCanFetchArtists(false)
+      setArtists((prev) => [...prev, ...artists_data])
     }
     fetchArtists()
-  }, [])
-
-  const shuffleArtists = (array) => {
-    let currentIndex = array.length
-    while (currentIndex > 0) {
-      const randomIndex = Math.floor(Math.random() * currentIndex)
-      currentIndex--
-      ;[array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ]
-    }
-    setArtists(array)
-  }
+  }, [artistPage])
 
   const changeTrackTitle = (text, index) => {
     setTracksToAdd((prev) => {
       prev[index].title = text
       return [...prev]
     })
-    console.log(tracksToAdd)
   }
 
   const addTrackArtist = (artist, index) => {
@@ -235,6 +224,14 @@ function AddAlbumPage() {
                         <h4>{artist.name}</h4>
                       </li>
                     ))}
+                  {canFetchArtists && (
+                    <button
+                      className="artist-search__add-button"
+                      onClick={() => setArtistPage((prev) => prev + 1)}
+                    >
+                      Добавить ещё артистов
+                    </button>
+                  )}
                 </ul>
               )}
             </div>
