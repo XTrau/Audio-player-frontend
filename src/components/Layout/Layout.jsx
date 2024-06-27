@@ -9,6 +9,7 @@ function Layout({ children }) {
         <div className="main-wrapper">{children}</div>
       </main>
       <TrackController />
+      <footer></footer>
     </>
   )
 }

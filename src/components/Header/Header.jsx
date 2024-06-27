@@ -15,14 +15,14 @@ function Header() {
           <Link to="/">
             <span>Music</span>
           </Link>
-          <Link to="favorite">
-            <span>Favorite</span>
-          </Link>
           <Link to="add_artist">
             <span>Add Artist</span>
           </Link>
           <Link to="add_album">
             <span>Add Album</span>
+          </Link>
+          <Link to="add_track">
+            <span>Add track</span>
           </Link>
         </nav>
         <div className="navigation-right">
