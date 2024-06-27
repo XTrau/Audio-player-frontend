@@ -3,9 +3,11 @@ import { API_URL } from '../config'
 
 const ENDPOINT = '/api/artists'
 
-export const getArtists = async () => {
+export const getArtists = async (page = 0, size = 10) => {
   try {
-    const response = await axios.get(`${API_URL + ENDPOINT}`)
+    const response = await axios.get(
+      `${API_URL + ENDPOINT}/?page=${page}&size=${size}`
+    )
     if (response.status !== 200) throw new Error('Network response was not ok')
     return response.data
   } catch (error) {
