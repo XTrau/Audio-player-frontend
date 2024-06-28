@@ -48,9 +48,8 @@ export const updateArtist = async (artistData, artist_id) => {
     const fd = new FormData()
     fd.append('name', artistData.name)
     fd.append('image_file', artistData.image_file)
-    fd.append('artist_id', artist_id)
 
-    const response = await axios.put(`${API_URL + ENDPOINT}`, fd)
+    const response = await axios.put(`${API_URL + ENDPOINT}/${artist_id}`, fd)
     if (response.status === 422) throw new Error('Bad artist data')
     if (response.status !== 201) throw new Error('Network response was not ok')
     return response.data

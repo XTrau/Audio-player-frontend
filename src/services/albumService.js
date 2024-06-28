@@ -50,9 +50,8 @@ export const updateAlbum = async (albumData, album_id) => {
     fd.append('title', albumData.title)
     fd.append('artist_id', albumData.artist_id)
     fd.append('image_file', albumData.image_file)
-    fd.append('album_id', album_id)
 
-    const response = await axios.put(`${API_URL + ENDPOINT}`, fd)
+    const response = await axios.put(`${API_URL + ENDPOINT}/${album_id}`, fd)
     if (response.status === 422) throw new Error('Bad album data')
     if (response.status !== 201) throw new Error('Network response was not ok')
     return response.data
