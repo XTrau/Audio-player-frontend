@@ -6,6 +6,8 @@ import {
   changeTrack,
 } from '../../store/slices/trackListReducer'
 
+import { Link } from 'react-router-dom'
+
 import { API_URL, FILE_ENDPOINT } from '../../config'
 
 function Track({ track, index, currentList, liked }) {
@@ -42,8 +44,16 @@ function Track({ track, index, currentList, liked }) {
         <div className="track-info">
           <div className="title">
             <span>{track.title}</span>
-            {track.artists &&
-              track.artists.map((artist) => artist.name).join(', ')}
+            {track.artists && (
+              <div className="artist-list">
+                {track.artists.map((artist) => (
+                  <>
+                    <Link to={`/artist/${artist.id}`}>{artist.name}</Link>
+                    <span>,</span>
+                  </>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <button className="like-btn hide-text">

@@ -88,3 +88,22 @@
     margin-right: 10px;
   }
 }
+
+.artist-list {
+  display: flex;
+
+  span {
+    margin-right: 0.2rem;
+  }
+
+  :last-child {
+    display: none;
+  }
+
+  a {
+    opacity: 0.8;
+    &:hover {
+      color: rgb(87, 87, 87);
+    }
+  }
+}
