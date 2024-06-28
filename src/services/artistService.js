@@ -42,3 +42,20 @@ export const createArtist = async (artistData) => {
     throw error
   }
 }
+
+export const updateArtist = async (artistData, artist_id) => {
+  try {
+    const fd = new FormData()
+    fd.append('name', artistData.name)
+    fd.append('image_file', artistData.image_file)
+    fd.append('artist_id', artist_id)
+
+    const response = await axios.put(`${API_URL + ENDPOINT}`, fd)
+    if (response.status === 422) throw new Error('Bad artist data')
+    if (response.status !== 201) throw new Error('Network response was not ok')
+    return response.data
+  } catch (error) {
+    console.error('Failed to create artist:', error)
+    throw error
+  }
+}

@@ -46,6 +46,22 @@ export const createTrack = async (trackData) => {
   }
 }
 
-export const updateTrack = async () => {
-  // TODO: add
+export const updateTrack = async (trackData, track_id) => {
+  try {
+    const fd = new FormData()
+    fd.append('title', trackData.title)
+    fd.append('artist_ids', trackData.artist_ids.join(','))
+    fd.append('album_id', trackData.album_id)
+    fd.append('audio_file', trackData.audio_file)
+    fd.append('image_file', trackData.image_file)
+    fd.append('track_id', track_id)
+
+    const response = await axios.put(`${API_URL + ENDPOINT}`, fd)
+    if (response.status === 422) throw new Error('Bad track data')
+    if (response.status !== 201) throw new Error('Network response was not ok')
+    return response.data
+  } catch (error) {
+    console.error('Failed to create track:', error)
+    throw error
+  }
 }
