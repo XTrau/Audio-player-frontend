@@ -39,7 +39,9 @@ function Main() {
       <h2>Музыка</h2>
       <TrackList trackList={trackList} />
       {canFetchTracks && (
+        <div className='add-track-button'>
         <button onClick={() => fetchNewTracks()}>Ещё треки...</button>
+        </div>
       )}
     </div>
   )
