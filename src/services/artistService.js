@@ -18,7 +18,8 @@ export const getArtists = async (page = 0, size = 10) => {
 
 export const getArtistById = async (id) => {
   try {
-    const response = await axios.get(`${API_URL}${ENDPOINT}/${id}`)
+    console.log(`${API_URL + ENDPOINT}/${id}`)
+    const response = await axios.get(`${API_URL + ENDPOINT}/${id}`)
     if (response.status !== 200) throw new Error('Network response was not ok')
     return response.data
   } catch (error) {
