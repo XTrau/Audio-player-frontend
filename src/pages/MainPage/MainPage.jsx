@@ -3,10 +3,13 @@ import TrackList from '../../components/TrackList/TrackList'
 import { useState, useEffect } from 'react'
 
 import { getTracks } from '../../services/trackService'
+import { changeTrackList } from '../../store/slices/trackListReducer.js'
 
 import './MainPage.scss'
+import {useDispatch} from "react-redux";
 
 function Main() {
+  const dispatch = useDispatch()
   const [trackList, setTrackList] = useState([])
   const [trackPage, setTrackPage] = useState(1)
   const [canFetchTracks, setCanFetchTracks] = useState(true)
@@ -15,7 +18,9 @@ function Main() {
     const fetchTracks = async () => {
       try {
         const tracks = await getTracks(0, 10)
+        console.log(tracks)
         setTrackList(tracks)
+        dispatch(changeTrackList(tracks))
       } catch (error) {
         console.error(error)
       }
