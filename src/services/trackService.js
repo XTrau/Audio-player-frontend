@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { API_URL } from '../config'
 
-const ENDPOINT = '/api/tracks'
+const ENDPOINT = '/tracks'
 
 export const getTracks = async (page = 0, size = 10) => {
   try {

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { API_URL } from '../config'
 
-const ENDPOINT = '/api/albums'
+const ENDPOINT = '/albums'
 
 export const getAlbums = async (page = 0, size = 10) => {
   try {

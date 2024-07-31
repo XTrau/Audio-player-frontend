@@ -18,7 +18,6 @@ function Main() {
     const fetchTracks = async () => {
       try {
         const tracks = await getTracks(0, 10)
-        console.log(tracks)
         setTrackList(tracks)
         dispatch(changeTrackList(tracks))
       } catch (error) {
