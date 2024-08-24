@@ -32,7 +32,8 @@ export const createArtist = async (artistData) => {
   try {
     const fd = new FormData()
     fd.append('name', artistData.name)
-    fd.append('image_file', artistData.image_file)
+		if (artistData.image_file)
+			fd.append('image_file', artistData.image_file)
 
     const response = await axios.post(`${API_URL + ENDPOINT}`, fd)
     if (response.status === 422) throw new Error('Bad artist data')

@@ -6,49 +6,54 @@ import { getTracks } from '../../services/trackService'
 import { changeTrackList } from '../../store/slices/trackListReducer.js'
 
 import './MainPage.scss'
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
 function Main() {
-  const dispatch = useDispatch()
-  const [trackList, setTrackList] = useState([])
-  const [trackPage, setTrackPage] = useState(1)
-  const [canFetchTracks, setCanFetchTracks] = useState(true)
+	const dispatch = useDispatch()
+	const [trackList, setTrackList] = useState([])
+	const [trackPage, setTrackPage] = useState(1)
+	const [canFetchTracks, setCanFetchTracks] = useState(false)
 
-  useEffect(() => {
-    const fetchTracks = async () => {
-      try {
-        const tracks = await getTracks(0, 10)
-        setTrackList(tracks)
-        dispatch(changeTrackList(tracks))
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchTracks()
-  }, [])
+	useEffect(() => {
+		const fetchTracks = async () => {
+			try {
+				const tracks = await getTracks(0, 10)
 
-  const fetchNewTracks = async () => {
-    try {
-      const tracks = await getTracks(trackPage, 10)
-      if (tracks.length < 10) setCanFetchTracks(false)
-      setTrackList((prev) => [...prev, ...tracks])
-      setTrackPage((prev) => prev + 1)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+				if (tracks.length === 10)
+					setCanFetchTracks(true)
 
-  return (
-    <div className="main-tracklist">
-      <h2>Музыка</h2>
-      <TrackList trackList={trackList} />
-      {canFetchTracks && (
-        <div className='add-track-button'>
-        <button onClick={() => fetchNewTracks()}>Ещё треки...</button>
-        </div>
-      )}
-    </div>
-  )
+				setTrackList(tracks)
+				dispatch(changeTrackList(tracks))
+			} catch (error) {
+				console.error(error)
+			}
+		}
+		fetchTracks()
+	}, [])
+
+	const fetchNewTracks = async () => {
+		try {
+			const tracks = await getTracks(trackPage, 10)
+			if (tracks.length < 10) setCanFetchTracks(false)
+			setTrackList((prev) => [...prev, ...tracks])
+			setTrackPage((prev) => prev + 1)
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	return (
+		<div className="main-tracklist">
+			<h2>Музыка</h2>
+
+			<TrackList trackList={trackList}/>
+			{canFetchTracks && (
+				<div className='add-track-button'>
+					<button onClick={() => fetchNewTracks()}>Ещё треки...</button>
+				</div>
+			)}
+		</div>
+	)
 }
 
 export default Main

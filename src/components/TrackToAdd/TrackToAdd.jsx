@@ -2,6 +2,8 @@ import { useState, useRef } from 'react'
 import { API_URL, FILE_ENDPOINT } from '../../config'
 
 import './TrackToAdd.scss'
+import { useOutsideClick } from "../../hooks/useOutsideClick.js";
+import TextInput from "../TextInput/TextInput.jsx";
 
 function TrackToAdd({
   track,
@@ -15,9 +17,13 @@ function TrackToAdd({
   removeTrack,
 }) {
   const [artistSearchValue, setArtistSearchValue] = useState('')
-  const [onArtistSearchFocused, setOnArtistSearchFocused] = useState()
+  const [onArtistSearchFocused, setOnArtistSearchFocused] = useState(false)
   const imageInputRef = useRef(null)
   const audioInputRef = useRef(null)
+  const artistSearchRef = useRef(null)
+
+  useOutsideClick(artistSearchRef, () => setOnArtistSearchFocused(false))
+
 
   return (
     <div className="add-track">
@@ -35,14 +41,14 @@ function TrackToAdd({
         />
       </button>
       <div className="add-track__input">
-        <input
-          className="text-input"
-          placeholder="Название трека"
-          value={track.title}
-          onChange={(e) => changeTitle(e.target.value, index)}
+        <TextInput
+          placeholder={"Название трека"}
+          data={track.title}
+          setData={(e) => changeTitle(e.target.value, index)}
+          onFocus={() => setOnArtistSearchFocused(true)}
         />
 
-        <div className="artist-search">
+        <div ref={artistSearchRef} className="artist-search">
           <input
             className="text-input"
             placeholder="Артист"

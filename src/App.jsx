@@ -10,34 +10,32 @@ import ArtistPage from './pages/ArtistPage/ArtistPage'
 import './index.scss'
 
 function App() {
-  return (
-    <>
-      <Layout>
-        <Routes>
-          <Route
-            path="/"
-            element={<Main />}
-          />
-          <Route
-            path="/add_artist"
-            element={<AddArtistPage />}
-          />
-          <Route
-            path="/add_album"
-            element={<AddAlbumPage />}
-          />
-          <Route
-            path="/artist/:artist_id"
-            element={<ArtistPage />}
-          />
-          <Route
-            path="/album/:album_id"
-            element={<AddAlbumPage />}
-          />
-        </Routes>
-      </Layout>
-    </>
-  )
+  return (<>
+    <Layout>
+      <Routes>
+        <Route
+          path="/"
+          element={<Main/>}
+        />
+        <Route
+          path="/add_artist"
+          element={<AddArtistPage/>}
+        />
+        <Route
+          path="/add_album"
+          element={<AddAlbumPage/>}
+        />
+        <Route
+          path="/artist/:artist_id"
+          element={<ArtistPage/>}
+        />
+        <Route
+          path="/album/:album_id"
+          element={<AddAlbumPage/>}
+        />
+      </Routes>
+    </Layout>
+  </>)
 }
 
 export default App

@@ -25,19 +25,13 @@
   gap: 1rem;
 }
 
-.text-input {
-  padding: 0.5rem;
-  width: 600px;
-  font-size: 1rem;
-  border: 1px solid black;
-}
-
 .artist-search-wrapper {
   position: relative;
 }
 
 .artist-search-list {
   position: absolute;
+  margin-top: .5rem;
   width: 100%;
   display: flex;
   flex-direction: column;
