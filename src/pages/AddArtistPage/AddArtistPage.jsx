@@ -10,6 +10,7 @@ function AddArtistPage() {
   const [artistImage, setArtistImage] = useState(null)
   const fileInputRef = useRef(null)
 
+
   const handleButtonClick = () => {
     fileInputRef.current.click()
   }
@@ -21,8 +22,8 @@ function AddArtistPage() {
     }
 
     const artist = {
-      name: artistName.trim(),
-      image_file: artistImageFile,
+      name: artistName,
+      image_file: artistImageFile
     }
 
     try {

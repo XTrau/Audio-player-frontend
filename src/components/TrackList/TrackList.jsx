@@ -12,6 +12,7 @@ function TrackList({ trackList }) {
           track={track}
         />
       ))}
+      <b className="tracklist-count">Треков: {trackList.length}</b>
     </div>
   )
 }

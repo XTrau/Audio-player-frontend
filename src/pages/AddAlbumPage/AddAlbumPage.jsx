@@ -11,289 +11,289 @@ import { createAlbum } from '../../services/albumService'
 import { createTrack } from '../../services/trackService'
 
 import './AddAlbumPage.scss'
+import { useOutsideClick } from "../../hooks/useOutsideClick.js";
+import TextInput from "../../components/TextInput/TextInput.jsx";
 
 function AddAlbumPage() {
-  const [tracksToAdd, setTracksToAdd] = useState([
-    {
-      title: '',
-      artists: [],
-      image: null,
-      imageFile: null,
-      audioFile: null,
-    },
-  ])
+	const [tracksToAdd, setTracksToAdd] = useState([
+		{
+			title: '',
+			artists: [],
+			image: null,
+			imageFile: null,
+			audioFile: null,
+		},
+	])
 
-  const fileInputRef = useRef(null)
+	const fileInputRef = useRef(null)
 
-  const [artistSearchValue, setArtistSearchValue] = useState('')
-  const [artists, setArtists] = useState([])
+	const [artists, setArtists] = useState([])
+	const [artistSearchValue, setArtistSearchValue] = useState('')
 
-  const [albumTitle, setAlbumTitle] = useState('')
-  const [albumArtist, setAlbumArtist] = useState(null)
+	const [albumTitle, setAlbumTitle] = useState('')
+	const [albumArtist, setAlbumArtist] = useState(null)
 
-  const [albumImageFile, setAlbumImageFile] = useState(null)
-  const [albumImage, setAlbumImage] = useState(null)
+	const [albumImageFile, setAlbumImageFile] = useState(null)
+	const [albumImage, setAlbumImage] = useState(null)
 
-  const [onArtistSearchFocused, setOnArtistSearchFocused] = useState(false)
+	const [onArtistSearchFocused, setOnArtistSearchFocused] = useState(false)
 
-  const [artistPage, setArtistPage] = useState(0)
-  const [canFetchArtists, setCanFetchArtists] = useState(true)
+	const [artistPage, setArtistPage] = useState(0)
+	const [canFetchArtists, setCanFetchArtists] = useState(true)
 
-  useEffect(() => {
-    const fetchArtists = async () => {
-      const artists_data = await getArtists(artistPage, 20)
-      if (artists_data.length < 20) setCanFetchArtists(false)
-      setArtists((prev) => [...prev, ...artists_data])
-    }
-    fetchArtists()
-  }, [artistPage])
+	const artistSearchRef = useRef(null)
 
-  const changeTrackTitle = (text, index) => {
-    setTracksToAdd((prev) => {
-      prev[index].title = text
-      return [...prev]
-    })
-  }
+	useOutsideClick(artistSearchRef, () => setOnArtistSearchFocused(false))
 
-  const addTrackArtist = (artist, index) => {
-    setTracksToAdd((prev) => {
-      for (const art of prev[index].artists)
-        if (art.id === artist.id) return prev
+	useEffect(() => {
+		const fetchArtists = async () => {
+			const artists_data = await getArtists(artistPage, 20)
+			if (artists_data.length < 20) setCanFetchArtists(false)
+			setArtists((prev) => [...artists_data])
+		}
+		fetchArtists()
+	}, [artistPage])
 
-      prev[index].artists = [...prev[index].artists, artist]
-      return [...prev]
-    })
-  }
+	const changeTrackTitle = (text, index) => {
+		setTracksToAdd((prev) => {
+			prev[index].title = text
+			return [...prev]
+		})
+	}
 
-  const removeTrackArtist = (artist, index) => {
-    setTracksToAdd((prev) => {
-      prev[index].artists = prev[index].artists.filter(
-        (art) => art.id !== artist.id
-      )
-      return [...prev]
-    })
-  }
+	const addTrackArtist = (artist, index) => {
+		setTracksToAdd((prev) => {
+			for (const art of prev[index].artists)
+				if (art.id === artist.id) return prev
 
-  const changeTrackImage = (file, index) => {
-    setTracksToAdd((prev) => {
-      if (file) {
-        prev[index].imageFile = file
-        prev[index].image = URL.createObjectURL(file)
-      }
-      return [...prev]
-    })
-  }
+			prev[index].artists = [...prev[index].artists, artist]
+			return [...prev]
+		})
+	}
 
-  const changeTrackAudio = (file, index) => {
-    setTracksToAdd((prev) => {
-      prev[index].audioFile = file
-      return [...prev]
-    })
-  }
+	const removeTrackArtist = (artist, index) => {
+		setTracksToAdd((prev) => {
+			prev[index].artists = prev[index].artists.filter(
+				(art) => art.id !== artist.id
+			)
+			return [...prev]
+		})
+	}
 
-  const addTrack = () => {
-    const initialTrack = {
-      title: '',
-      artists: [],
-      image: null,
-      imageFile: null,
-      audioFile: null,
-    }
-    setTracksToAdd((prev) => [...prev, initialTrack])
-  }
+	const changeTrackImage = (file, index) => {
+		setTracksToAdd((prev) => {
+			if (file) {
+				prev[index].imageFile = file
+				prev[index].image = URL.createObjectURL(file)
+			}
+			return [...prev]
+		})
+	}
 
-  const removeTrack = (index) => {
-    setTracksToAdd((prev) => prev.filter((el, i) => i !== index))
-  }
+	const changeTrackAudio = (file, index) => {
+		setTracksToAdd((prev) => {
+			prev[index].audioFile = file
+			return [...prev]
+		})
+	}
 
-  const sendData = async () => {
-    if (!albumTitle || albumArtist === null) {
-      alert('Заполните все поля')
-      return
-    }
+	const addTrack = () => {
+		const initialTrack = {
+			title: '',
+			artists: [],
+			image: null,
+			imageFile: null,
+			audioFile: null,
+		}
+		setTracksToAdd((prev) => [...prev, initialTrack])
+	}
 
-    for (const track of tracksToAdd) {
-      if (!track.title || !track.audioFile || track.artists.length === 0) {
-        alert('Заполните все поля')
-        return
-      }
-    }
+	const removeTrack = (index) => {
+		setTracksToAdd((prev) => prev.filter((el, i) => i !== index))
+	}
 
-    const album = {
-      title: albumTitle,
-      image_file: albumImageFile,
-      artist_id: albumArtist.id,
-    }
+	const sendData = async () => {
+		if (!albumTitle || albumArtist === null) {
+			alert('Заполните все поля')
+			return
+		}
 
-    try {
-      const res = await createAlbum(album)
-      await sendTracks(res.album_id)
-    } catch (e) {
-      alert('Произошла ошибка')
-      console.error(e)
-    }
-  }
+		for (const track of tracksToAdd) {
+			if (!track.title || !track.audioFile || track.artists.length === 0) {
+				alert('Заполните все поля')
+				return
+			}
+		}
 
-  const sendTracks = async (album_id) => {
-    if (!album_id) return
+		const album = {
+			title: albumTitle,
+			image_file: albumImageFile,
+			artist_id: albumArtist.id,
+		}
 
-    for (const track of tracksToAdd) {
-      const newTrack = {
-        title: track.title,
-        album_id: album_id,
-        artist_ids: track.artists.map((artist) => artist.id),
-        image_file: track.imageFile,
-        audio_file: track.audioFile,
-      }
+		try {
+			const res = await createAlbum(album)
+			await sendTracks(res.album_id)
+		} catch (e) {
+			alert('Произошла ошибка')
+			console.error(e)
+		}
+	}
 
-      await createTrack(newTrack)
-    }
+	const sendTracks = async (album_id) => {
+		if (!album_id) return
 
-    alert('Альбом успешно добавлен')
-  }
+		for (const track of tracksToAdd) {
+			const newTrack = {
+				title: track.title,
+				album_id: album_id,
+				artist_ids: track.artists.map((artist) => artist.id),
+				image_file: track.imageFile,
+				audio_file: track.audioFile,
+			}
 
-  const selectAlbumImage = (e) => {
-    if (e.target.files[0]) {
-      setAlbumImageFile(e.target.files[0])
-      setAlbumImage(URL.createObjectURL(e.target.files[0]))
-    }
-  }
+			await createTrack(newTrack)
+		}
 
-  return (
-    <div className="add-album-wrapper">
-      <h2>Добавить Альбом</h2>
-      <div className="add-album">
-        <button onClick={() => fileInputRef.current.click()}>
-          <img
-            className="add-album__album-image"
-            src={albumImage}
-          />
-          <input
-            type="file"
-            ref={fileInputRef}
-            accept="image/png, image/jpeg, image/jpg"
-            onChange={selectAlbumImage}
-            hidden
-          />
-        </button>
+		alert('Альбом успешно добавлен')
+	}
 
-        <div className="add-album__input">
-          <input
-            className="text-input"
-            placeholder="Название Альбома"
-            value={albumTitle}
-            onChange={(e) => setAlbumTitle(e.target.value)}
-          />
+	const selectAlbumImage = (e) => {
+		if (e.target.files[0]) {
+			setAlbumImageFile(e.target.files[0])
+			setAlbumImage(URL.createObjectURL(e.target.files[0]))
+		}
+	}
 
-          <div className="artist-search">
-            <input
-              className="text-input"
-              placeholder="Артист"
-              value={artistSearchValue}
-              onChange={(e) => setArtistSearchValue(e.target.value)}
-              onFocus={() => setOnArtistSearchFocused(true)}
-            />
+	return (
+		<div className="add-album-wrapper">
+			<h2>Добавить Альбом</h2>
+			<div className="add-album">
+				<button onClick={() => fileInputRef.current.click()}>
+					<img
+						className="add-album__album-image"
+						src={albumImage}
+					/>
+					<input
+						type="file"
+						ref={fileInputRef}
+						accept="image/png, image/jpeg, image/jpg"
+						onChange={selectAlbumImage}
+						hidden
+					/>
+				</button>
 
-            <div className="artist-search-wrapper">
-              {onArtistSearchFocused && (
-                <ul className="artist-search-list">
-                  {artists
-                    .filter((artist) =>
-                      artist.name
-                        .toLocaleLowerCase()
-                        .includes(artistSearchValue.toLocaleLowerCase())
-                    )
-                    .map((artist) => (
-                      <li
-                        key={artist.id}
-                        onClick={() => {
-                          setOnArtistSearchFocused(false)
-                          setAlbumArtist(artist)
-                        }}
-                        className="searched-artist"
-                      >
-                        <img
-                          className="searched-artist__image"
-                          src={
-                            API_URL +
-                            FILE_ENDPOINT +
-                            '/' +
-                            artist.image_file_name
-                          }
-                        />
-                        <h4>{artist.name}</h4>
-                      </li>
-                    ))}
-                  {canFetchArtists && (
-                    <button
-                      className="artist-search__add-button"
-                      onClick={() => setArtistPage((prev) => prev + 1)}
-                    >
-                      Добавить ещё артистов
-                    </button>
-                  )}
-                </ul>
-              )}
-            </div>
-          </div>
+				<div className="add-album__input">
+					<TextInput placeholder={"Название альбома"} data={albumTitle} setData={setAlbumTitle}/>
 
-          {albumArtist && (
-            <div>
-              <button
-                onClick={() => {
-                  setAlbumArtist(null)
-                }}
-                className="mini-artist"
-              >
-                <img
-                  className="mini-artist__image"
-                  src={
-                    API_URL + FILE_ENDPOINT + '/' + albumArtist.image_file_name
-                  }
-                  width={30}
-                  height={30}
-                />
-                <span>{albumArtist.name}</span>
-              </button>
-            </div>
-          )}
+					<div ref={artistSearchRef} className="artist-search">
+						<TextInput
+							placeholder={"Артист"}
+							data={artistSearchValue}
+							setData={setArtistSearchValue}
+							onFocus={() => setOnArtistSearchFocused(true)}
+						/>
 
-          <p>
-            There is no artist? <Link to="/add_artist">Add Artist</Link>
-          </p>
-        </div>
-      </div>
+						<div className="artist-search-wrapper">
+							{onArtistSearchFocused && (
+								<ul className="artist-search-list">
+									{artists
+									.filter((artist) =>
+										artist.name
+										.toLocaleLowerCase()
+										.includes(artistSearchValue.toLocaleLowerCase())
+									)
+									.map((artist) => (
+										<li
+											key={artist.id}
+											onClick={() => {
+												setOnArtistSearchFocused(false)
+												setAlbumArtist(artist)
+											}}
+											className="searched-artist"
+										>
+											<img
+												className="searched-artist__image"
+												src={
+													API_URL +
+													FILE_ENDPOINT +
+													'/' +
+													artist.image_file_name
+												}
+											/>
+											<h4>{artist.name}</h4>
+										</li>
+									))}
+									{canFetchArtists && (
+										<button
+											className="artist-search__add-button"
+											onClick={() => setArtistPage((prev) => prev + 1)}
+										>
+											Добавить ещё артистов
+										</button>
+									)}
+								</ul>
+							)}
+						</div>
+					</div>
 
-      <div className="track-add-list">
-        {tracksToAdd.map((el, index) => (
-          <TrackToAdd
-            track={el}
-            key={index}
-            index={index}
-            artists={artists}
-            changeTitle={changeTrackTitle}
-            addTrackArtist={addTrackArtist}
-            removeTrackArtist={removeTrackArtist}
-            changeImage={changeTrackImage}
-            changeAudio={changeTrackAudio}
-            removeTrack={removeTrack}
-          />
-        ))}
-      </div>
-      <button
-        onClick={addTrack}
-        className="album-btn"
-      >
-        Add Track
-      </button>
-      <button
-        className="album-btn"
-        onClick={sendData}
-      >
-        Send Album
-      </button>
-    </div>
-  )
+					{albumArtist && (
+						<div>
+							<button
+								onClick={() => {
+									setAlbumArtist(null)
+								}}
+								className="mini-artist"
+							>
+								<img
+									className="mini-artist__image"
+									src={
+										API_URL + FILE_ENDPOINT + '/' + albumArtist.image_file_name
+									}
+									width={30}
+									height={30}
+								/>
+								<span>{albumArtist.name}</span>
+							</button>
+						</div>
+					)}
+
+					<p>
+						There is no artist? <Link to="/add_artist">Add Artist</Link>
+					</p>
+				</div>
+			</div>
+
+			<div className="track-add-list">
+				{tracksToAdd.map((el, index) => (
+					<TrackToAdd
+						track={el}
+						key={index}
+						index={index}
+						artists={artists}
+						changeTitle={changeTrackTitle}
+						addTrackArtist={addTrackArtist}
+						removeTrackArtist={removeTrackArtist}
+						changeImage={changeTrackImage}
+						changeAudio={changeTrackAudio}
+						removeTrack={removeTrack}
+					/>
+				))}
+			</div>
+			<button
+				onClick={addTrack}
+				className="album-btn"
+			>
+				Add Track
+			</button>
+			<button
+				className="album-btn"
+				onClick={sendData}
+			>
+				Send Album
+			</button>
+		</div>
+	)
 }
 
 export default AddAlbumPage

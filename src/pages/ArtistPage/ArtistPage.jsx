@@ -15,7 +15,6 @@ function ArtistPage() {
   useEffect(() => {
     async function fetchArtist() {
       const artist_data = await getArtistById(artist_id)
-      console.log(artist_data)
       setArtist(artist_data)
     }
     fetchArtist()
