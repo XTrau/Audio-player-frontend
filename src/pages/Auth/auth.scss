@@ -1,0 +1,37 @@
+.auth-page {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1rem;
+  border: 1px solid #8e8e8e;
+  border-radius: 10px;
+}
+
+.auth-input {
+  font-size: 1rem;
+  padding: 15px 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.auth-button {
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  color: white;
+  background: #21bf21;
+  width: 100%;
+}
+
+.link {
+  text-decoration: underline;
+}

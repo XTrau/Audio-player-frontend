@@ -8,6 +8,8 @@ import AddAlbumPage from './pages/AddAlbumPage/AddAlbumPage'
 import ArtistPage from './pages/ArtistPage/ArtistPage'
 
 import './index.scss'
+import LoginPage from "./pages/Auth/LoginPage.jsx";
+import RegistrationPage from "./pages/Auth/RegistrationPage.jsx";
 
 function App() {
   return (<>
@@ -16,6 +18,14 @@ function App() {
         <Route
           path="/"
           element={<Main/>}
+        />
+        <Route
+          path="/login"
+          element={<LoginPage/>}
+        />
+        <Route
+          path="/registration"
+          element={<RegistrationPage/>}
         />
         <Route
           path="/add_artist"
