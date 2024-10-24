@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './auth.scss';
+import { Link } from "react-router-dom";
 
 function LoginPage(props) {
 	const [login, setLogin] = useState("")
@@ -12,7 +13,7 @@ function LoginPage(props) {
 							 onChange={(e) => setLogin(e.target.value)}/>
 				<input className="auth-input" type="password" placeholder="Пароль" required={true} value={password}
 							 onChange={(e) => setPassword(e.target.value)}/>
-				<div>Нет аккаунта? <a href="/registration" className="link">Регистрация</a></div>
+				<div>Нет аккаунта? <Link to="/registration" className="link">Регистрация</Link></div>
 				<button className="auth-button">Войти</button>
 			</div>
 		</div>

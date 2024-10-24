@@ -8,9 +8,10 @@
 .auth-wrapper {
   display: flex;
   flex-direction: column;
+  box-shadow: 1px 1px 10px #aaaaaa;
   gap: 10px;
-  padding: 1rem;
-  border: 1px solid #8e8e8e;
+  padding: 2rem;
+  border: 1px solid #e5e5e5;
   border-radius: 10px;
 }
 
@@ -30,6 +31,14 @@
   color: white;
   background: #21bf21;
   width: 100%;
+
+  &:hover {
+    background: #1eaa1e;
+  }
+
+  &:active {
+    background: #21bf21;
+  }
 }
 
 .link {
