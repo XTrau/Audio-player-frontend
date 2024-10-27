@@ -1,0 +1,46 @@
+.user-nav-drop-box {
+  position: absolute;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+
+  background: white;
+  border-radius: 10px;
+  border: 1px solid black;
+  right: -10px;
+  overflow: hidden;
+
+  .user-nav-drop-box-item {
+    cursor: pointer;
+    padding: 12px;
+    font-size: 16px;
+
+    border-bottom: 1px solid #696969;
+
+    &:hover {
+      background: #aaaaaa;
+    }
+  }
+
+  :last-child {
+    border-bottom: none;
+  }
+
+  .user-nav-info {
+    max-width: 180px;
+    div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .user-nav-drop-box-item {
+
+
+  }
+
+  .logout-button {
+    color: red;
+    text-align: right;
+  }
+}

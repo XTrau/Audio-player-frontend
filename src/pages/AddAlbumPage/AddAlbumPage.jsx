@@ -1,15 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-
-import { getArtists } from '../../services/artistService'
-
 import TrackToAdd from '../../components/TrackToAdd/TrackToAdd'
-
 import { API_URL, FILE_ENDPOINT } from '../../config'
-
-import { createAlbum } from '../../services/albumService'
-import { createTrack } from '../../services/trackService'
-
 import './AddAlbumPage.scss'
 import { useOutsideClick } from "../../hooks/useOutsideClick.js";
 import TextInput from "../../components/TextInput/TextInput.jsx";

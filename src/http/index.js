@@ -14,11 +14,10 @@ $api.interceptors.response.use((config) => {
 		try {
 			await axios.get(`${API_URL}/refresh`, {withCredentials: true});
 			return $api.request(originalRequest);
-		} catch (error) {
-			console.log("Не авторизованный пользователь")
+		} catch (err) {
 		}
 	}
-	throw error;
+	return Promise.reject(error);
 })
 
 export default $api;

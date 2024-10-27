@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './auth.scss';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthService } from "../../services/authService.js";
+import { useSelector } from "react-redux";
 
 function RegistrationPage(props) {
 	const [email, setEmail] = useState("");
@@ -9,6 +10,14 @@ function RegistrationPage(props) {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [successRegistration, setSuccessRegistration] = useState(false);
+
+	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (isAuthenticated)
+			navigate("/me");
+	}, [isAuthenticated]);
 
 
 	function validateFields() {

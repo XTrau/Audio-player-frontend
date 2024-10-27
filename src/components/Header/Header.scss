@@ -48,36 +48,6 @@ header {
     justify-self: right;
   }
 
-  .user-nav-list {
-    position: absolute;
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
-
-    background: white;
-    border-radius: 10px;
-    border: 1px solid black;
-    right: -10px;
-    overflow: hidden;
-
-
-    .user-nav-list-item {
-      cursor: pointer;
-      padding: 15px;
-      font-size: 16px;
-
-      border-bottom: 1px solid #696969;
-
-      &:hover {
-        background: #aaaaaa;
-      }
-    }
-
-    :last-child {
-      border-bottom: none;
-    }
-  }
-
   .search {
     margin: 0 30px;
     width: 30%;

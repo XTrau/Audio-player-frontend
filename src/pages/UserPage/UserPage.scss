@@ -1,0 +1,15 @@
+.user-page {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  .user-info {
+    padding: 10px;
+    font-size: 18px;
+  }
+}
+
+.user-page-wrapper {
+  width: 50%;
+  box-shadow: 0 0 10px #aaaaaa;
+}

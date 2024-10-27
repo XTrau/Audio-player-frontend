@@ -11,8 +11,17 @@ import './index.scss'
 import LoginPage from "./pages/Auth/LoginPage.jsx";
 import RegistrationPage from "./pages/Auth/RegistrationPage.jsx";
 import UserPage from "./pages/UserPage/UserPage.jsx";
+import { checkAuthenticated } from "./store/slices/authReducer.js";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(checkAuthenticated());
+	}, []);
+
+
 	return (<>
 		<Layout>
 			<Routes>
@@ -43,10 +52,6 @@ function App() {
 				<Route
 					path="/artist/:artist_id"
 					element={<ArtistPage/>}
-				/>
-				<Route
-					path="/album/:album_id"
-					element={<AddAlbumPage/>}
 				/>
 			</Routes>
 		</Layout>

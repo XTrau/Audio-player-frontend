@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import './Header.scss'
 import { useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick.js";
+import NavDropBox from "./NavDropBox/NavDropBox.jsx";
 
 function Header() {
 	const userNavButtonRef = useRef(null);
@@ -64,14 +65,7 @@ function Header() {
 						/>
 					</svg>
 				</button>
-
-				{activeUserNav &&
-					(<ul className="user-nav-list">
-						<Link to="/registration" className="user-nav-list-item">Регистрация</Link>
-						<Link to="/login" className="user-nav-list-item">Вход</Link>
-					</ul>)
-				}
-
+				{activeUserNav && <NavDropBox/>}
 			</div>
 		</header>
 	)

@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './auth.scss';
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { AuthService } from "../../services/authService.js";
+import { useSelector } from "react-redux";
 
 
 function LoginPage(props) {
 	const [login, setLogin] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
+
+	const navigate = useNavigate();
+	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+	useEffect(() => {
+		if (isAuthenticated) navigate("/me")
+	}, [isAuthenticated]);
 
 	const emailHandler = (e) => {
 		setLogin(e.target.value);
@@ -18,7 +26,6 @@ function LoginPage(props) {
 		setPassword(e.target.value);
 		setErrorMessage("");
 	}
-
 
 	const onClickLogin = async (e) => {
 		try {
