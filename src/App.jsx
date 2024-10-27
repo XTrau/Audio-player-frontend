@@ -10,42 +10,47 @@ import ArtistPage from './pages/ArtistPage/ArtistPage'
 import './index.scss'
 import LoginPage from "./pages/Auth/LoginPage.jsx";
 import RegistrationPage from "./pages/Auth/RegistrationPage.jsx";
+import UserPage from "./pages/UserPage/UserPage.jsx";
 
 function App() {
-  return (<>
-    <Layout>
-      <Routes>
-        <Route
-          path="/"
-          element={<Main/>}
-        />
-        <Route
-          path="/login"
-          element={<LoginPage/>}
-        />
-        <Route
-          path="/registration"
-          element={<RegistrationPage/>}
-        />
-        <Route
-          path="/add_artist"
-          element={<AddArtistPage/>}
-        />
-        <Route
-          path="/add_album"
-          element={<AddAlbumPage/>}
-        />
-        <Route
-          path="/artist/:artist_id"
-          element={<ArtistPage/>}
-        />
-        <Route
-          path="/album/:album_id"
-          element={<AddAlbumPage/>}
-        />
-      </Routes>
-    </Layout>
-  </>)
+	return (<>
+		<Layout>
+			<Routes>
+				<Route
+					path="/"
+					element={<Main/>}
+				/>
+				<Route
+					path="/login"
+					element={<LoginPage/>}
+				/>
+				<Route
+					path="/registration"
+					element={<RegistrationPage/>}
+				/>
+				<Route
+					path="/me"
+					element={<UserPage/>}
+				/>
+				<Route
+					path="/add_artist"
+					element={<AddArtistPage/>}
+				/>
+				<Route
+					path="/add_album"
+					element={<AddAlbumPage/>}
+				/>
+				<Route
+					path="/artist/:artist_id"
+					element={<ArtistPage/>}
+				/>
+				<Route
+					path="/album/:album_id"
+					element={<AddAlbumPage/>}
+				/>
+			</Routes>
+		</Layout>
+	</>)
 }
 
 export default App

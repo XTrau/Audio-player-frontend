@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import './auth.scss';
 import { Link } from "react-router-dom";
+import { AuthService } from "../../services/authService.js";
 
 function RegistrationPage(props) {
 	const [email, setEmail] = useState("");
-	const [userName, setUserName] = useState("");
+	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-
 	const [successRegistration, setSuccessRegistration] = useState(false);
+
 
 	function validateFields() {
 		let flag = true;
@@ -17,7 +18,7 @@ function RegistrationPage(props) {
 			flag = false;
 		}
 
-		if (userName.length === 0) {
+		if (username.length === 0) {
 			flag = false;
 		}
 
@@ -36,9 +37,32 @@ function RegistrationPage(props) {
 		return flag;
 	}
 
+	const emailHandler = (e) => {
+		setEmail(e.target.value);
+	}
+
+	const usernameHandler = (e) => {
+		setUsername(e.target.value);
+	}
+
+	const passwordHandler = (e) => {
+		setPassword(e.target.value);
+	}
+
+	const confirmPasswordHandler = (e) => {
+		setConfirmPassword(e.target.value);
+	}
+
 	async function onClickRegister(e) {
-		e.preventDefault();
 		const validate = validateFields();
+		if (!validate) return null;
+
+		try {
+			const response = await AuthService.register(username, email, password);
+			if (response.status === 200) setSuccessRegistration(true);
+		} catch (error) {
+			console.log(error);
+		}
 
 	}
 
@@ -58,14 +82,14 @@ function RegistrationPage(props) {
 		<div className="auth-page">
 			<div className="auth-wrapper">
 				<h2>Регистрация</h2>
-				<input className="auth-input" type="text" placeholder="Email" required={true} value={email}
-							 onChange={(e) => setEmail(e.target.value)}/>
-				<input className="auth-input" type="text" placeholder="Имя пользователя" required={true} value={userName}
-							 onChange={(e) => setUserName(e.target.value)}/>
-				<input className="auth-input" type="password" placeholder="Пароль" required={true} value={password}
-							 onChange={(e) => setPassword(e.target.value)}/>
-				<input className="auth-input" type="password" placeholder="Пароль" required={true} value={confirmPassword}
-							 onChange={(e) => setConfirmPassword(e.target.value)}/>
+				<input className="auth-input" type="text" placeholder="Email" value={email}
+							 onChange={(e) => emailHandler(e)}/>
+				<input className="auth-input" type="text" placeholder="Имя пользователя" value={username}
+							 onChange={(e) => usernameHandler(e)}/>
+				<input className="auth-input" type="password" placeholder="Пароль" value={password}
+							 onChange={(e) => passwordHandler(e)}/>
+				<input className="auth-input" type="password" placeholder="Пароль" value={confirmPassword}
+							 onChange={(e) => confirmPasswordHandler(e)}/>
 				<div>Уже есть аккаунта? <Link to="/login" className="link">Вход</Link></div>
 				<button className="auth-button" onClick={onClickRegister}>Зарегистрироваться</button>
 			</div>
