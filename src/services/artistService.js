@@ -5,6 +5,10 @@ export class ArtistService {
 		return $api.get(`/artists/?page=${page}&size=${size}`)
 	}
 
+	static async searchArtists(query) {
+		return $api.get(`/artists/search?query=${query}`);
+	}
+
 	static async getArtistById(id) {
 		return $api.get(`/artists/${id}`)
 	}

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import './AddArtistPage.scss'
-import { artistService } from "../../services/artistService.js";
+import { ArtistService } from "../../services/artistService.js";
 
 function AddArtistPage() {
 	const [artistName, setArtistName] = useState('')
@@ -39,7 +39,7 @@ function AddArtistPage() {
 			fd.append('image_file', artistImageFile);
 
 		try {
-			await artistService.createArtist(fd);
+			await ArtistService.createArtist(fd);
 			setSuccessCreated(true);
 		} catch (e) {
 			console.log(e)

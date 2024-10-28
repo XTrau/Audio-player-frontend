@@ -23,7 +23,6 @@ function TrackToAdd({
 
 	useOutsideClick(artistSearchRef, () => setOnArtistSearchFocused(false))
 
-
 	return (
 		<div className="add-track">
 			<button onClick={() => imageInputRef.current.click()}>
@@ -44,7 +43,6 @@ function TrackToAdd({
 							 placeholder={"Название трека"}
 							 value={track.title}
 							 onChange={(e) => changeTitle(e.target.value, index)}
-							 onFocus={() => setOnArtistSearchFocused(true)}
 				/>
 
 				<div ref={artistSearchRef} className="artist-search">

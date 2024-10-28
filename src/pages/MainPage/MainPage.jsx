@@ -2,7 +2,7 @@ import TrackList from '../../components/TrackList/TrackList'
 
 import { useState, useEffect } from 'react'
 
-import { trackService } from '../../services/trackService'
+import { TrackService } from '../../services/trackService'
 import { changeTrackList } from '../../store/slices/trackListReducer.js'
 
 import './MainPage.scss'
@@ -17,7 +17,7 @@ function Main() {
 	useEffect(() => {
 		const fetchTracks = async () => {
 			try {
-				const response = await trackService.getTracks(0, 10);
+				const response = await TrackService.getTracks(0, 10);
 				const tracks = response.data;
 				if (tracks.length === 10) setCanFetchTracks(true);
 				setTrackList(tracks)
