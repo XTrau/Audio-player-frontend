@@ -1,6 +1,6 @@
 import $api from "../http/index.js";
 
-export class trackService {
+export class TrackService {
 	static async getTracks(page = 0, size = 10) {
 		return $api.get(`/tracks/?page=${page}&size=${size}`);
 	}

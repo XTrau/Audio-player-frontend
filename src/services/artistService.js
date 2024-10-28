@@ -1,6 +1,6 @@
 import $api from "../http/index.js";
 
-export class artistService {
+export class ArtistService {
 	static async getArtists(page = 0, size = 10) {
 		return $api.get(`/artists/?page=${page}&size=${size}`)
 	}
