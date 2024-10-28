@@ -20,7 +20,6 @@ function Main() {
 				const response = await trackService.getTracks(0, 10);
 				const tracks = response.data;
 				if (tracks.length === 10) setCanFetchTracks(true);
-
 				setTrackList(tracks)
 				dispatch(changeTrackList(tracks))
 			} catch (error) {

@@ -39,6 +39,12 @@ li {
   list-style: none;
 }
 
+.error-message {
+  color: red;
+  background: pink;
+  padding: 10px;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }

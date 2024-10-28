@@ -4,7 +4,6 @@ import TrackToAdd from '../../components/TrackToAdd/TrackToAdd'
 import { API_URL, FILE_ENDPOINT } from '../../config'
 import './AddAlbumPage.scss'
 import { useOutsideClick } from "../../hooks/useOutsideClick.js";
-import TextInput from "../../components/TextInput/TextInput.jsx";
 
 function AddAlbumPage() {
 	const [tracksToAdd, setTracksToAdd] = useState([
@@ -176,14 +175,19 @@ function AddAlbumPage() {
 				</button>
 
 				<div className="add-album__input">
-					<TextInput placeholder={"Название альбома"} data={albumTitle} setData={setAlbumTitle}/>
+					<input type="text"
+								 placeholder="Название альбома"
+								 value={albumTitle}
+								 onChange={(e) => setAlbumTitle(e.target.value)}
+					/>
 
 					<div ref={artistSearchRef} className="artist-search">
-						<TextInput
-							placeholder={"Артист"}
-							data={artistSearchValue}
-							setData={setArtistSearchValue}
-							onFocus={() => setOnArtistSearchFocused(true)}
+
+						<input type="text"
+									 placeholder="Артист"
+									 value={artistSearchValue}
+									 onChange={(e) => setArtistSearchValue(e.target.value)}
+									 onFocus={() => setOnArtistSearchFocused(true)}
 						/>
 
 						<div className="artist-search-wrapper">

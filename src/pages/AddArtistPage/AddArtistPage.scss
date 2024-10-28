@@ -1,40 +1,81 @@
-.add-artist-wrapper {
-  h2 {
-    text-align: center;
-  }
-
+.add-artist-page {
+  height: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
 
-.add-artist {
+.add-artist-wrapper {
+  width: 45%;
+  padding: 20px;
+  box-shadow: 0 0 10px #848484;
+}
+
+.add-artist-form {
   display: flex;
-  gap: 0.5rem;
-  margin: 1rem;
+  gap: 12px;
+  margin: 24px 0;
 }
 
 .add-artist__right {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.8rem;
+  gap: 14px;
 
   button {
-    font-size: 1rem;
+    font-size: 18px;
     font-weight: 400;
     border-radius: 0.2rem;
     padding: 0.4rem;
     background: rgb(171, 171, 171);
 
-    &:active {
+    &:hover {
       background: rgb(163, 163, 163);
     }
+
+    &:active {
+      background: rgb(148, 148, 148);
+    }
   }
+}
+
+.add-artist__artist-input {
+  width: 100%;
+  border: 1px solid rgb(171, 171, 171);
+  font-size: 16px;
+  padding: 10px;
 }
 
 .add-artist__artist-image {
   background-size: cover;
   border-radius: 0.5rem;
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
+}
+
+.success-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  gap: 10px;
+
+}
+
+.add-more {
+  font-size: 1.4rem;
+  padding: 10px;
+  color: white;
+  background: #0e80ae;
+  border-radius: 5px;
+
+  &:hover {
+    background: #0c739b;
+  }
+
+  &:active {
+    background: #0b6d93;
+  }
 }

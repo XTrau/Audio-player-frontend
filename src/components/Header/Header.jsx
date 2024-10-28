@@ -65,7 +65,7 @@ function Header() {
 						/>
 					</svg>
 				</button>
-				{activeUserNav && <NavDropBox/>}
+				{activeUserNav && <NavDropBox setActiveUserNav={setActiveUserNav}/>}
 			</div>
 		</header>
 	)

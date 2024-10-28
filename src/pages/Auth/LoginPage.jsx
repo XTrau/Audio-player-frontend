@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import './auth.scss';
 import { Link, redirect, useNavigate } from "react-router-dom";
 import { AuthService } from "../../services/authService.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { checkAuthenticated } from "../../store/slices/authReducer.js";
 
 
 function LoginPage(props) {
 	const [login, setLogin] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
+	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
 	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -30,8 +32,11 @@ function LoginPage(props) {
 	const onClickLogin = async (e) => {
 		try {
 			const response = await AuthService.login(login, password);
-			if (response.status === 204)
-				window.location.replace("/me");
+			if (response.status === 204) {
+				await dispatch(checkAuthenticated());
+				navigate("/me");
+			}
+
 		} catch (error) {
 			setErrorMessage(error.response?.data?.detail || "Непредвиденная ошибка");
 		}

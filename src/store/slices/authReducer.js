@@ -16,8 +16,8 @@ const authSlice = createSlice({
 	name: 'auth', initialState: {
 		isAuthenticated: false, user: null, loading: false,
 	}, reducers: {
-		logout: async (state) => {
-			await AuthService.logout();
+		logout: (state) => {
+			AuthService.logout();
 			state.isAuthenticated = false;
 			state.user = null;
 		}

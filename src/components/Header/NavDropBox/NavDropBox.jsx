@@ -5,19 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { AuthService as authService } from "../../../services/authService.js";
 import { logout } from "../../../store/slices/authReducer.js";
 
-function NavDropBox(props) {
+function NavDropBox({setActiveUserNav}) {
 	const user = useSelector(state => state.auth.user);
 	const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 	const dispatch = useDispatch();
 
 	const onClickLogout = async () => {
 		await dispatch(logout());
-		window.location.reload();
 	}
 
 	if (isAuthenticated) {
 		return (
-			<ul className="user-nav-drop-box">
+			<ul className="user-nav-drop-box" onClick={() => setActiveUserNav(false)}>
 				<Link to="/me" className="user-nav-drop-box-item user-nav-info">
 					<h3>{user.username}</h3>
 					<div>{user.email}</div>
@@ -31,7 +30,7 @@ function NavDropBox(props) {
 	}
 
 	return (
-		<ul className="user-nav-drop-box">
+		<ul className="user-nav-drop-box" onClick={() => setActiveUserNav(false)}>
 			<Link to="/registration" className="user-nav-drop-box-item">Регистрация</Link>
 			<Link to="/login" className="user-nav-drop-box-item">Вход</Link>
 		</ul>
