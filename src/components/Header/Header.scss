@@ -3,7 +3,8 @@ header {
   background: linear-gradient(135deg, #7a7af5, #00a4be);
 
   display: grid;
-  grid-template-columns: min-content auto 40%;
+  grid-template-columns: min-content auto 40% 10%;
+  gap: 100px;
 
   padding: 10px 30px;
 
@@ -19,7 +20,7 @@ header {
       content: "";
       display: block;
       width: 100%;
-      height: 1px;
+      height: 2px;
       background: black;
       transform: scaleX(0);
       transform-origin: left;
@@ -39,8 +40,16 @@ header {
 
   .navigation {
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    gap: 50px;
+
+    #main {
+      font-size: 20px;
+    }
+
+    span {
+      font-size: 18px;
+    }
   }
 
   .user-nav {
@@ -48,14 +57,25 @@ header {
     justify-self: right;
   }
 
-  .search {
-    margin: 0 30px;
-    width: 30%;
+  .search-section {
+    align-self: center;
 
-    input {
-      width: 100%;
-      padding: 5px 10px;
-      border-radius: 5px;
+    .search, .search-button {
+      padding: 10px;
+      font-size: 18px;
+
+    }
+
+    .search {
+      width: 60%;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .search-button {
+      border-radius: 0 5px 5px 0;
+      background: #287b84;
+      color: white;
     }
   }
+
 }

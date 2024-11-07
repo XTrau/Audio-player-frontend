@@ -1,0 +1,44 @@
+
+.artist-searcher {
+  position: relative;
+}
+
+.artist-search-wrapper {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+}
+
+.artist-search-list {
+  margin-top: .5rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #aaaaaa;
+
+  background: rgba(255, 255, 255);
+
+  max-height: 400px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.artist-search-item {
+  display: flex;
+  gap: 10px;
+  padding: 5px 0;
+
+  cursor: pointer;
+
+  &:hover {
+    background: #d4d4d4;
+  }
+
+  &:active {
+    background: #c2c2c2;
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
+}

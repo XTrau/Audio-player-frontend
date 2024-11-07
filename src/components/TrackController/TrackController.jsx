@@ -18,6 +18,8 @@ function TrackController() {
 	const [durationTime, setDurationTime] = useState('00:00')
 	const [volume, setVolume] = useState(localStorage.getItem('volume') ? localStorage.getItem('volume') : 5)
 
+	const [isHidden, setIsHidden] = useState(false);
+
 	const dispatch = useDispatch()
 	const audioRef = useRef()
 
@@ -89,11 +91,17 @@ function TrackController() {
 		const seconds = Math.floor(audioRef.current.currentTime - minutes * 60)
 		const time = strPadLeft(minutes, '0') + ':' + strPadLeft(seconds, '0')
 		setCurrentTime(time)
+	};
+
+
+	const onClickHideButton = () => {
+		setIsHidden(prev => !prev)
 	}
 
 	if (!currentTrack) return <div></div>
 	return (
-		<nav className="track-controller">
+		<nav className={`track-controller ${isHidden ? "hidden" : ""}`}>
+			<button className="hide-button" onClick={onClickHideButton}>{isHidden ? "↑" : "↓"}</button>
 			<audio
 				src={
 					currentTrack.audio_file_name

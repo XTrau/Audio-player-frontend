@@ -26,18 +26,20 @@ function Header() {
 
 			<nav className="navigation">
 				<Link to="/">
-					<span>Music</span>
+					<span id="main">Главная</span>
 				</Link>
 				<Link to="/add_artist">
-					<span>Add Artist</span>
+					<span>Добавить артиста</span>
 				</Link>
 				<Link to="/add_album">
-					<span>Add Album</span>
-				</Link>
-				<Link to="/add_track">
-					<span>Add track</span>
+					<span>Добавить альбом</span>
 				</Link>
 			</nav>
+
+			<div className="search-section">
+				<input type="text" className="search"/>
+				<button className="search-button">Поиск</button>
+			</div>
 
 			<div className="user-nav" ref={userNavButtonRef}>
 				<button className="user-nav-button" onClick={showUserNav}>

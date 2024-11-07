@@ -1,134 +1,93 @@
-import { useState, useRef } from 'react'
-import { API_URL, FILE_ENDPOINT } from '../../config'
+import { useRef } from 'react'
 
 import './TrackToAdd.scss'
-import { useOutsideClick } from "../../hooks/useOutsideClick.js";
+import ArtistSearcher from "../ArtistSearcher/ArtistSearcher.jsx";
+import ArtistList from "../ArtistList/ArtistList.jsx";
 
 function TrackToAdd({
 											track,
 											artists,
 											index,
-											changeTitle,
 											removeTrackArtist,
 											addTrackArtist,
+											changeTitle,
 											changeImage,
 											changeAudio,
 											removeTrack,
+											onClickUpButton,
+											onClickDownButton,
+											first,
+											last
 										}) {
-	const [artistSearchValue, setArtistSearchValue] = useState('')
-	const [onArtistSearchFocused, setOnArtistSearchFocused] = useState(false)
-	const imageInputRef = useRef(null)
-	const audioInputRef = useRef(null)
-	const artistSearchRef = useRef(null)
+	const imageInputRef = useRef(null);
+	const audioInputRef = useRef(null);
 
-	useOutsideClick(artistSearchRef, () => setOnArtistSearchFocused(false))
+	const onSearchedArtistClick = (artist) => {
+		addTrackArtist(artist, index);
+	};
 
-	return (
-		<div className="add-track">
-			<button onClick={() => imageInputRef.current.click()}>
-				<img
-					className="add-track__image"
-					src={track.image}
-				/>
-				<input
-					ref={imageInputRef}
-					type="file"
-					accept="image/png, image/jpeg, image/jpg"
-					onChange={(e) => changeImage(e.target.files[0], index)}
-					hidden
-				/>
-			</button>
-			<div className="add-track__input">
-				<input type="text"
-							 placeholder={"Название трека"}
-							 value={track.title}
-							 onChange={(e) => changeTitle(e.target.value, index)}
-				/>
+	const onTrackArtistClick = (artist) => {
+		removeTrackArtist(artist, index);
+	};
 
-				<div ref={artistSearchRef} className="artist-search">
+
+	return (<div className="track-to-add">
+		<button className='image-input' onClick={() => imageInputRef.current.click()}>
+			<img
+				className="track-to-add__image"
+				src={track.image}
+			/>
+			<input
+				ref={imageInputRef}
+				type="file"
+				accept="image/png, image/jpeg, image/jpg"
+				onChange={(e) => changeImage(e.target.files[0], index)}
+				hidden
+			/>
+		</button>
+		<div className="track-to-add__input">
+			<input
+				type="text"
+				placeholder={"Название трека"}
+				value={track.title}
+				onChange={(e) => changeTitle(e.target.value, index)}
+			/>
+
+			<ArtistSearcher artistClickHandler={onSearchedArtistClick}/>
+			<ArtistList artists={artists} artistClickHandler={onTrackArtistClick}/>
+
+			<div className="add-track__buttons">
+				<button
+					className="btn"
+					onClick={() => audioInputRef.current.click()}
+				>
+					Изменить MP3 Файл
 					<input
-						className="text-input"
-						placeholder="Артист"
-						value={artistSearchValue}
-						onChange={(e) => setArtistSearchValue(e.target.value)}
-						onFocus={() => setOnArtistSearchFocused(true)}
+						ref={audioInputRef}
+						type="file"
+						accept="audio/mp3"
+						onChange={(e) => changeAudio(e.target.files[0], index)}
+						hidden
 					/>
-
-					<div className="artist-search-wrapper">
-						{onArtistSearchFocused && (
-							<ul className="artist-search-list">
-								{artists
-								.filter((artist) =>
-									artist.name
-									.toLocaleLowerCase()
-									.includes(artistSearchValue.toLocaleLowerCase())
-								)
-								.map((artist) => (
-									<li
-										key={artist.id}
-										onClick={() => {
-											setOnArtistSearchFocused(false)
-											addTrackArtist(artist, index)
-										}}
-										className="searched-artist"
-									>
-										<img
-											className="searched-artist__image"
-											src={
-												API_URL + FILE_ENDPOINT + '/' + artist.image_file_name
-											}
-										/>
-										<h4>{artist.name}</h4>
-									</li>
-								))}
-							</ul>
-						)}
-					</div>
-				</div>
-
-				<div className="mini-artist-list">
-					{track.artists.map((artist) => (
-						<button
-							key={artist.id}
-							onClick={() => removeTrackArtist(artist, index)}
-							className="mini-artist"
-						>
-							<img
-								className="mini-artist__image"
-								src={API_URL + FILE_ENDPOINT + '/' + artist.image_file_name}
-								width={30}
-								height={30}
-							/>
-							<span>{artist.name}</span>
-						</button>
-					))}
-				</div>
-
-				<div className="add-track__buttons">
-					<button
-						className="btn"
-						onClick={() => audioInputRef.current.click()}
-					>
-						Add Music file
-						<input
-							ref={audioInputRef}
-							type="file"
-							accept="audio/mp3"
-							onChange={(e) => changeAudio(e.target.files[0], index)}
-							hidden
-						/>
-					</button>
-					<button
-						className="btn"
-						onClick={() => removeTrack(index)}
-					>
-						Remove Track
-					</button>
-				</div>
-				{track.audioFile ? <p>File added! {track.audioFile.name}</p> : <></>}
+				</button>
+				<button
+					className="btn"
+					onClick={() => removeTrack(index)}
+				>
+					Удалить трек
+				</button>
 			</div>
+			{track.audioFile ? <p>File added! {track.audioFile.name}</p> : <></>}
 		</div>
-	)
+		<div className="track-to-add-number-section">
+			<div className="track-to-add-number">
+				{index + 1}.
+			</div>
+			{!first && <button onClick={() => onClickUpButton(index)} className={"track-to-add-move-button-up"}></button>}
+			{!last && <button onClick={() => onClickDownButton(index)} className={"track-to-add-move-button-down"}></button>}
+		</div>
+
+	</div>);
 }
 
 export default TrackToAdd

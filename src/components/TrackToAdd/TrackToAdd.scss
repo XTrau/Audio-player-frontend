@@ -1,48 +1,86 @@
-.add-track {
+.track-to-add {
   display: flex;
-  gap: 1rem;
+  gap: 10px;
   width: 100%;
-}
 
-.add-track__image {
-  width: 190px;
-  height: 190px;
-  background-size: cover;
-}
+  .track-to-add__image {
+    width: 190px;
+    height: 190px;
+    background-size: cover;
+  }
 
-.add-track__input {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+  .track-to-add-number {
+    font-size: 18px;
+  }
 
-.mini-artist {
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  padding-right: 0.3rem;
-  color: white;
-  background: rgb(39, 39, 95);
-  overflow: hidden;
-  border-radius: 0.5rem 0 0.5rem 0;
-}
+  .track-to-add__input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
 
-.mini-artist__image {
-  background-size: cover;
-}
+    input {
+      width: 100%;
+      font-size: 16px;
+      border: 1px solid black;
+      padding: 5px;
+      border-radius: 3px;
+    }
+  }
 
-.mini-artist-list {
-  display: flex;
-  gap: 0.4rem;
-}
+  .mini-artist {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding-right: 0.3rem;
+    color: white;
+    background: rgb(39, 39, 95);
+    overflow: hidden;
+    border-radius: 0.5rem 0 0.5rem 0;
+  }
 
-.add-track__buttons {
-  display: flex;
-  gap: 1rem;
-  .btn {
-    font-size: 1rem;
-    background: rgb(194, 194, 255);
-    padding: 0.5rem;
-    border-radius: 5px;
+  .mini-artist__image {
+    background-size: cover;
+  }
+
+  .mini-artist-list {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .add-track__buttons {
+    display: flex;
+    gap: 1rem;
+
+    .btn {
+      font-size: 1rem;
+      background: rgb(194, 194, 255);
+      padding: 0.5rem;
+      border-radius: 5px;
+    }
+  }
+
+  .track-to-add-number-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+
+    .track-to-add-move-button-up, .track-to-add-move-button-down {
+      width: 15px;
+      height: 15px;
+      border-top: 3px solid black;
+      border-left: 3px solid black;
+    }
+
+    .track-to-add-move-button-down {
+      transform: rotate(224deg);
+    }
+
+    .track-to-add-move-button-up {
+      transform: rotate(44deg);
+    }
   }
 }
+
