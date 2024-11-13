@@ -1,23 +1,26 @@
-import { useState, useRef } from 'react'
-import './AddArtistPage.scss'
+import { useState, useRef } from 'react';
+import './AddArtistPage.scss';
 import { ArtistService } from "../../services/artistService.js";
 
 function AddArtistPage() {
-	const [artistName, setArtistName] = useState('')
-	const [artistImageFile, setArtistImageFile] = useState(null)
-	const [artistImage, setArtistImage] = useState(null)
-	const [error, setError] = useState("")
-	const [successCreated, setSuccessCreated] = useState(false)
-	const fileInputRef = useRef(null)
+	const [artistName, setArtistName] = useState('');
+	const [artistImageFile, setArtistImageFile] = useState(null);
+	const [artistImage, setArtistImage] = useState(null);
+
+	const [error, setError] = useState("");
+	const [successCreated, setSuccessCreated] = useState(false);
+	const [loading, setLoading] = useState(false)
+
+	const fileInputRef = useRef(null);
 
 	const artistNameHandler = (e) => {
-		setArtistName(e.target.value)
-		setError("")
-	}
+		setArtistName(e.target.value);
+		setError("");
+	};
 
 	const changeImageButtonClick = () => {
-		fileInputRef.current.click()
-	}
+		fileInputRef.current.click();
+	};
 
 	const addMoreHandler = () => {
 		setArtistName("");
@@ -25,7 +28,7 @@ function AddArtistPage() {
 		setArtistImage(null);
 		setArtistImageFile(null);
 		setSuccessCreated(false);
-	}
+	};
 
 	const onClickSend = async () => {
 		if (artistName.trim() === '') {
@@ -33,37 +36,39 @@ function AddArtistPage() {
 			return;
 		}
 
+		setLoading(true);
+
 		const fd = new FormData();
 		fd.append('name', artistName);
-		if (artistImageFile)
-			fd.append('image_file', artistImageFile);
+		if (artistImageFile) fd.append('image_file', artistImageFile);
 
 		try {
-			await ArtistService.createArtist(fd);
+			const response = await ArtistService.createArtist(fd);
 			setSuccessCreated(true);
 		} catch (e) {
-			console.log(e)
+			console.log(e);
+			if (e.response?.data?.detail)
+				setError(e.response.data.detail);
 		}
-	}
+		setLoading(false);
+	};
 
 	const uploadImage = (e) => {
-		setArtistImageFile(e.target.files[0])
-		if (e.target.files[0]) setArtistImage(URL.createObjectURL(e.target.files[0]))
-	}
+		setArtistImageFile(e.target.files[0]);
+		if (e.target.files[0]) setArtistImage(URL.createObjectURL(e.target.files[0]));
+	};
 
 	if (successCreated) {
-		return (
-			<div className="add-artist-page">
-				<div className="add-artist-wrapper">
-					<div className="success-message">
-						<p>
-							Артист {artistName} успешно добавлен!
-						</p>
-						<button className="add-more" onClick={(e) => addMoreHandler()}>Добавить ещё</button>
-					</div>
+		return (<div className="add-artist-page">
+			<div className="add-artist-wrapper">
+				<div className="success-message">
+					<p>
+						Артист {artistName} успешно добавлен!
+					</p>
+					<button className="add-more" onClick={(e) => addMoreHandler()}>Добавить ещё</button>
 				</div>
 			</div>
-		)
+		</div>)
 	}
 
 	return (
@@ -85,7 +90,7 @@ function AddArtistPage() {
 							value={artistName}
 							onChange={(e) => artistNameHandler(e)}
 						/>
-						<button onClick={changeImageButtonClick}>
+						<button className="change-artist-image-button" onClick={changeImageButtonClick}>
 							<input
 								type="file"
 								accept="image/png, image/jpeg, image/jpg"
@@ -95,13 +100,12 @@ function AddArtistPage() {
 							/>
 							Изменить изображение
 						</button>
-						<button onClick={onClickSend}>Отправить</button>
+						<button className='send-artist-button' onClick={onClickSend} disabled={loading}>Отправить</button>
 					</div>
 				</div>
 			</div>
 		</div>
-
-	)
+	);
 }
 
 export default AddArtistPage

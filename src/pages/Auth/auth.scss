@@ -39,6 +39,11 @@
   &:active {
     background: #21bf21;
   }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
 }
 
 .link {

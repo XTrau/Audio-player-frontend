@@ -23,19 +23,38 @@
   justify-content: center;
   gap: 14px;
 
-  button {
-    font-size: 18px;
+  .send-artist-button, .change-artist-image-button {
+    color: white;
+    font-size: 16px;
     font-weight: 400;
-    border-radius: 0.2rem;
-    padding: 0.4rem;
-    background: rgb(171, 171, 171);
+    padding: 10px;
+
+    &:disabled {
+      opacity: 0.7;
+    }
+  }
+
+  .send-artist-button {
+    background: rgb(39, 128, 47);
 
     &:hover {
-      background: rgb(163, 163, 163);
+      background: rgb(52, 157, 62);
     }
 
     &:active {
-      background: rgb(148, 148, 148);
+      background: rgb(51, 155, 61);
+    }
+  }
+
+  .change-artist-image-button {
+    background: rgb(78, 78, 78);
+
+    &:hover {
+      background: rgb(94, 94, 94);
+    }
+
+    &:active {
+      background: rgb(68, 68, 68);
     }
   }
 }
@@ -43,7 +62,7 @@
 .add-artist__artist-input {
   width: 100%;
   border: 1px solid rgb(171, 171, 171);
-  font-size: 16px;
+  font-size: 18px;
   padding: 10px;
 }
 

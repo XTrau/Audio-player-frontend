@@ -10,6 +10,9 @@ function LoginPage(props) {
 	const [login, setLogin] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
+
+	const [loading, setLoading] = useState(false);
+
 	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
@@ -30,16 +33,17 @@ function LoginPage(props) {
 	}
 
 	const onClickLogin = async (e) => {
+		setLoading(true);
 		try {
 			const response = await AuthService.login(login, password);
 			if (response.status === 204) {
 				await dispatch(checkAuthenticated());
 				navigate("/me");
 			}
-
 		} catch (error) {
 			setErrorMessage(error.response?.data?.detail || "Непредвиденная ошибка");
 		}
+		setLoading(false);
 	}
 
 	return (
@@ -53,7 +57,7 @@ function LoginPage(props) {
 				<input className="auth-input" type="password" placeholder="Пароль" required={true} value={password}
 							 onChange={(e) => passwordHandler(e)}/>
 				<div>Нет аккаунта? <Link to="/registration" className="link">Регистрация</Link></div>
-				<button className="auth-button" onClick={onClickLogin}>Войти</button>
+				<button className="auth-button" onClick={onClickLogin} disabled={loading}>Войти</button>
 			</div>
 		</div>
 	);
