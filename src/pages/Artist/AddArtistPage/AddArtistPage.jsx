@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import './AddArtistPage.scss';
-import { ArtistService } from "../../services/artistService.js";
+import { ArtistService } from "../../../services/artistService.js";
 
 function AddArtistPage() {
 	const [artistName, setArtistName] = useState('');

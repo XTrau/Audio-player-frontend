@@ -1,0 +1,97 @@
+.artist-page {
+  padding: 50px 70px;
+
+  .artist-info-wrapper {
+    display: flex;
+    gap: 1rem;
+    overflow: hidden;
+  }
+
+  .artist-info-left {
+    z-index: 2;
+    margin-left: 5%;
+
+    img {
+      height: 150px;
+      width: 150px;
+      overflow: hidden;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+  }
+
+  .artist-info-right {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .artist-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+
+    .artist-info-name-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .artist-name {
+      font-size: 18px;
+      font-weight: bold;
+      position: relative;
+      display: flex;
+
+      &:after {
+        content: "";
+        height: 1px;
+        background-color: var(--main-text-color);
+        position: absolute;
+        bottom: -5px;
+        left: -500%;
+        width: 1600%;
+        z-index: 1;
+      }
+    }
+
+
+    button {
+      font-size: 1rem;
+      border: 1px solid black;
+    }
+
+    .artist-count-info {
+      opacity: .6;
+    }
+  }
+
+  .album-section {
+    h2 {
+      margin: 0.5rem 0;
+    }
+  }
+
+  .album-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .track-section {
+    h2 {
+      margin: 0.5rem 0;
+    }
+
+    .tracklist-count {
+      display: none;
+    }
+
+    .all-tracks {
+      padding: 20px;
+      font-size: 20px;
+    }
+  }
+}
+
+

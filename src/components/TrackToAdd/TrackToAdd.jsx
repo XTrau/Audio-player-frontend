@@ -2,7 +2,7 @@ import { useRef } from 'react'
 
 import './TrackToAdd.scss'
 import ArtistSearcher from "../ArtistSearcher/ArtistSearcher.jsx";
-import ArtistList from "../ArtistList/ArtistList.jsx";
+import ArtistTrackToAddList from "../ArtistTrackToAddList/ArtistTrackToAddList.jsx";
 
 function TrackToAdd({
 											track,
@@ -54,7 +54,7 @@ function TrackToAdd({
 			/>
 
 			<ArtistSearcher artistClickHandler={onSearchedArtistClick}/>
-			<ArtistList artists={artists} artistClickHandler={onTrackArtistClick}/>
+			<ArtistTrackToAddList artists={artists} artistClickHandler={onTrackArtistClick}/>
 
 			<div className="add-track__buttons">
 				<button

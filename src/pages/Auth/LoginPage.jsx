@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './auth.scss';
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthService } from "../../services/authService.js";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuthenticated } from "../../store/slices/authReducer.js";
@@ -46,6 +46,12 @@ function LoginPage(props) {
 		setLoading(false);
 	}
 
+	const handleEnter = async (e) => {
+		if (e.key === "Enter") {
+			await onClickLogin();
+		}
+	}
+
 	return (
 		<div className="auth-page">
 			<div className="auth-wrapper">
@@ -53,9 +59,9 @@ function LoginPage(props) {
 				{errorMessage && <div className="error-message">{errorMessage}</div>}
 
 				<input className="auth-input" type="text" placeholder="Email или Имя пользователя" required={true} value={login}
-							 onChange={(e) => emailHandler(e)}/>
+							 onChange={(e) => emailHandler(e)} onKeyDown={handleEnter}/>
 				<input className="auth-input" type="password" placeholder="Пароль" required={true} value={password}
-							 onChange={(e) => passwordHandler(e)}/>
+							 onChange={(e) => passwordHandler(e)} onKeyDown={handleEnter}/>
 				<div>Нет аккаунта? <Link to="/registration" className="link">Регистрация</Link></div>
 				<button className="auth-button" onClick={onClickLogin} disabled={loading}>Войти</button>
 			</div>

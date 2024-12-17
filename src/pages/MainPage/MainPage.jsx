@@ -21,7 +21,6 @@ function Main() {
 				const tracks = response.data;
 				if (tracks.length === 10) setCanFetchTracks(true);
 				setTrackList(tracks)
-				dispatch(changeTrackList(tracks))
 			} catch (error) {
 				console.error(error)
 			}
@@ -43,7 +42,7 @@ function Main() {
 	return (
 		<div className="main-page">
 			<div className="main-page-wrapper">
-				<h2>Музыка</h2>
+				<h2>Главная</h2>
 
 				<TrackList trackList={trackList}/>
 				{canFetchTracks && (

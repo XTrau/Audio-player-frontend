@@ -4,9 +4,7 @@ import { AuthService } from "../../services/authService.js";
 export const checkAuthenticated = createAsyncThunk('auth/checkAuthenticated', async (_, {rejectWithValue}) => {
 	try {
 		const response = await AuthService.me();
-		if (response.status === 200) {
-			return response.data;
-		}
+		if (response.status === 200) return response.data;
 	} catch (error) {
 		return rejectWithValue(error.response.status);
 	}

@@ -1,0 +1,56 @@
+.album-wrapper {
+  padding: 15px;
+  background: var(--background-elements-color);
+  cursor: pointer;
+  transition: background-color 100ms ease-in-out;
+
+  &:hover {
+    background: var(--background-elements-hover-color);
+  }
+  &:active {
+    background: var(--background-elements-color);
+  }
+
+  .album-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .album-description {
+      position: relative;
+      width: 150px;
+      overflow: hidden;
+
+      .album-title {
+        display: inline-block;
+        position: absolute;
+        font-size: 14px;
+        text-wrap: nowrap;
+      }
+
+      .scroll-text {
+        transform: translateX(0);
+        animation: none;
+        transition: transform 2s ease;
+      }
+
+      .album-status {
+        color: var(--main-text-color);
+        padding-top: 16px;
+        opacity: 0.5;
+        font-size: 12px;
+        text-wrap: nowrap;
+      }
+    }
+  }
+}
+
+.album-wrapper:hover {
+  .album-content {
+    .album-description {
+      .scroll-text {
+        animation: scroll-text 14s linear infinite;
+      }
+    }
+  }
+
+}

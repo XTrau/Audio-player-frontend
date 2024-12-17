@@ -53,7 +53,6 @@ export default trackListSlice.reducer
 export const {
   changeTrack,
   changeTrackList,
-  changeTrackIndex,
   toNextTrack,
   toPrevTrack,
   playTrack,

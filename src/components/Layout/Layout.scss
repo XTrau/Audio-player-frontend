@@ -1,0 +1,48 @@
+.main-content {
+  display: flex;
+  height: 100%;
+  padding: 40px;
+  gap: 100px;
+
+  .navigation {
+    height: min-content;
+    background: var(--background-block-color);
+    width: 300px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    nav {
+      font-size: 18px;
+      line-height: 35px;
+
+      ul {
+        padding: 5px;
+        border-bottom: 2px var(--background-second-elements-color) dashed;
+        li {
+          text-wrap: nowrap;
+          color: var(--main-text-color);
+        }
+      }
+      ul:last-child {
+        border-bottom: none;
+      }
+
+      .nav-item {
+
+        &:hover, &.active {
+          text-decoration: 1px var(--second-text-color) underline;
+          text-underline-offset: 3px;
+        }
+      }
+    }
+  }
+
+  .page {
+    padding: 50px 70px;
+    background: var(--background-block-color);
+    width: 100%;
+
+  }
+}

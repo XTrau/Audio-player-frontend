@@ -16,13 +16,15 @@
   .track-to-add__input {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 100%;
     gap: 10px;
 
     input {
+      background: none;
+      border-bottom: 1px solid var(--background-second-elements-color);
       width: 100%;
       font-size: 16px;
-      border: 1px solid black;
       padding: 5px;
       border-radius: 3px;
     }
@@ -54,24 +56,31 @@
 
     .btn {
       font-size: 1rem;
-      background: rgb(194, 194, 255);
+      background: var(--background-elements-color);
       padding: 0.5rem;
       border-radius: 5px;
+
+      &:hover {
+        background: var(--background-elements-hover-color);
+      }
+      &:active {
+        background: var(--background-elements-color);
+      }
     }
   }
 
   .track-to-add-number-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 15px;
+    justify-content: center;
+    gap: 30px;
 
 
     .track-to-add-move-button-up, .track-to-add-move-button-down {
       width: 15px;
       height: 15px;
-      border-top: 3px solid black;
-      border-left: 3px solid black;
+      border-top: 3px solid var(--background-second-elements-color);
+      border-left: 3px solid var(--background-second-elements-color);
     }
 
     .track-to-add-move-button-down {

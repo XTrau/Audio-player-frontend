@@ -1,28 +1,17 @@
 .track-wrapper {
   display: flex;
   width: 100%;
-  justify-content: space-between;
   align-items: center;
   padding: 10px 15px;
-  border-radius: 10px;
-  background: rgb(226, 226, 226);
-  color: black;
+  background: var(--background-elements-color);
   transition: background 0.1s ease-in-out;
 
   &.play {
-    background: linear-gradient(135deg, rgb(192, 192, 192), rgb(118, 118, 118));
-
-    &:hover {
-      background: linear-gradient(
-        135deg,
-        rgb(233, 233, 233),
-        rgb(163, 163, 163)
-      );
-    }
+    background: var(--background-second-elements-color);
   }
 
   &:hover {
-    background: #dedede;
+    background: var(--background-elements-hover-color);
   }
 
   .track-info {
@@ -57,21 +46,48 @@
   }
 
   .play-btn {
-    scale: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: var(--background-block-color);
+
+    border-radius: 50%;
+    transition: background 0.1s ease-in-out;
 
     span {
       &.play-img {
-        border-left: 20px solid rgb(129, 129, 129);
+        border: 7px solid transparent;
+        border-left: 14px solid rgb(181, 181, 181);
+        transform: translateX(25%);
+        width: 0;
+        height: 0;
       }
 
       &.pause-img {
-        border-left: 4px solid rgb(129, 129, 129);
-        border-right: 4px solid rgb(129, 129, 129);
+        display: block;
+        height: 15px;
+        width: 11px;
+        border-left: 3px solid rgb(181, 181, 181);
+        border-right: 3px solid rgb(181, 181, 181);
       }
     }
 
     &:hover {
-      background: black;
+      border: none;
+      outline: none;
+
+      span {
+        &.play-img {
+          border-left: 14px solid rgb(255, 255, 255);
+        }
+
+        &.pause-img {
+          border-left: 3px solid rgb(255, 255, 255);
+          border-right: 3px solid rgb(255, 255, 255);
+        }
+      }
     }
   }
 
@@ -96,14 +112,10 @@
     margin-right: 0.2rem;
   }
 
-  :last-child {
-    display: none;
-  }
-
-  a {
-    opacity: 0.8;
+  .artist-list__text {
+    opacity: .4;
     &:hover {
-      color: rgb(87, 87, 87);
+      opacity: 1;
     }
   }
 }

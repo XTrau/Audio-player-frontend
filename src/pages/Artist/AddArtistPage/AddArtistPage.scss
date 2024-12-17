@@ -7,7 +7,6 @@
 .add-artist-wrapper {
   width: 45%;
   padding: 20px;
-  box-shadow: 0 0 10px #848484;
 }
 
 .add-artist-form {
@@ -24,7 +23,6 @@
   gap: 14px;
 
   .send-artist-button, .change-artist-image-button {
-    color: white;
     font-size: 16px;
     font-weight: 400;
     padding: 10px;
@@ -47,27 +45,31 @@
   }
 
   .change-artist-image-button {
-    background: rgb(78, 78, 78);
+    background: var(--background-elements-color);
 
     &:hover {
-      background: rgb(94, 94, 94);
+      background: var(--background-elements-hover-color);
     }
 
     &:active {
-      background: rgb(68, 68, 68);
+      background: var(--background-second-elements-color);
     }
   }
 }
 
 .add-artist__artist-input {
   width: 100%;
-  border: 1px solid rgb(171, 171, 171);
+  color: var(--main-text-color);
+  font-weight: bold;
+  background: inherit;
+  border: 1px solid var(--background-second-elements-color);
   font-size: 18px;
   padding: 10px;
 }
 
 .add-artist__artist-image {
-  background-size: cover;
+  overflow: hidden;
+  object-fit: contain;
   width: 220px;
   height: 220px;
 }
@@ -85,8 +87,8 @@
 .add-more {
   font-size: 1.4rem;
   padding: 10px;
-  color: white;
-  background: #0e80ae;
+  color: var(--main-text-color);
+  background: #0d4b64;
   border-radius: 5px;
 
   &:hover {

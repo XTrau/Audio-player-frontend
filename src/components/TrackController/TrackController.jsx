@@ -1,206 +1,235 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-	toNextTrack,
-	toPrevTrack,
-	playTrack,
-	pauseTrack,
-} from '../../store/slices/trackListReducer'
-import { API_URL, FILE_ENDPOINT } from '../../config'
-import './TrackController.scss'
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { pauseTrack, playTrack, toNextTrack, toPrevTrack, } from '../../store/slices/trackListReducer';
+import './TrackController.scss';
+import { FileService } from "../../services/fileService.js";
+import ArtistList from "../ArtistList/ArtistList.jsx";
 
 function TrackController() {
-	const currentTrack = useSelector((store) => store.trackList.track)
-	const paused = useSelector((store) => store.trackList.paused)
+	const currentTrack = useSelector((store) => store.trackList.track);
+	const paused = useSelector((store) => store.trackList.paused);
 
-	const [trackTime, setTrackTime] = useState(0)
-	const [currentTime, setCurrentTime] = useState('00:00')
-	const [durationTime, setDurationTime] = useState('00:00')
-	const [volume, setVolume] = useState(localStorage.getItem('volume') ? localStorage.getItem('volume') : 5)
+	const [duration, setDuration] = useState(0);
+	const [progress, setProgress] = useState(0);
+	const [currentTimeStr, setCurrentTimeStr] = useState('00:00');
+	const [durationTimeStr, setDurationTimeStr] = useState('00:00');
 
+	const [volume, setVolume] = useState(localStorage.getItem('volume') ? localStorage.getItem('volume') : 5);
 	const [isHidden, setIsHidden] = useState(false);
 
-	const dispatch = useDispatch()
-	const audioRef = useRef()
+	const dispatch = useDispatch();
+	const audioRef = useRef(null);
 
-	const playPause = useCallback(() => {
-		if (audioRef.current.paused) {
-			dispatch(playTrack())
-		} else {
-			dispatch(pauseTrack())
-		}
-	}, [dispatch])
-
-	const nextSong = useCallback(() => {
-		dispatch(toNextTrack())
-		dispatch(playTrack())
-	}, [dispatch])
-
-	const prevSong = useCallback(() => {
-		dispatch(toPrevTrack())
-		dispatch(playTrack())
-	}, [dispatch])
+	const titleContainerRef = useRef(null);
+	const artistsContainerRef = useRef(null);
+	const titleTextRef = useRef(null);
+	const artistsTextRef = useRef(null);
+	const [titleScroll, setTitleScroll] = useState(false);
+	const [artistsScroll, setArtistsScroll] = useState(false);
 
 	useEffect(() => {
-		if (paused) audioRef.current?.pause()
-		else audioRef.current?.play()
-	}, [paused, currentTrack])
+		if (titleContainerRef.current && titleTextRef.current) {
+			const isOverflowing = titleTextRef.current.scrollWidth > titleContainerRef.current.offsetWidth;
+			setTitleScroll(isOverflowing);
+		}
+	}, [currentTrack]);
+
+	useEffect(() => {
+		if (artistsContainerRef.current && artistsTextRef.current) {
+			const isOverflowing = artistsTextRef.current.scrollWidth > artistsContainerRef.current.offsetWidth;
+			setArtistsScroll(isOverflowing);
+		}
+	}, [currentTrack]);
+
+	const playPause = () => {
+		const audio = audioRef.current;
+		if (audio) {
+			if (paused)
+				dispatch(playTrack());
+			else
+				dispatch(pauseTrack());
+		}
+	};
+
+	const nextSong = () => {
+		dispatch(toNextTrack());
+
+		setCurrentTime(0);
+
+		const audio = audioRef.current;
+		dispatch(playTrack());
+		if (audio) audio.play();
+	};
+
+	const prevSong = () => {
+		dispatch(toPrevTrack());
+
+		setCurrentTime(0);
+
+		const audio = audioRef.current;
+		dispatch(playTrack());
+		if (audio) audio.play();
+	};
+
+	useEffect(() => {
+		const audio = audioRef.current;
+		if (audio) {
+			if (paused) {
+				audio.pause();
+			} else {
+				audio.play();
+			}
+		}
+	}, [paused, currentTrack]);
 
 	useEffect(() => {
 		if ('mediaSession' in navigator) {
-			navigator.mediaSession.setActionHandler('play', playPause)
-			navigator.mediaSession.setActionHandler('pause', playPause)
-			navigator.mediaSession.setActionHandler('previoustrack', prevSong)
-			navigator.mediaSession.setActionHandler('nexttrack', nextSong)
+			navigator.mediaSession.setActionHandler('play', playPause);
+			navigator.mediaSession.setActionHandler('pause', playPause);
+			navigator.mediaSession.setActionHandler('previoustrack', prevSong);
+			navigator.mediaSession.setActionHandler('nexttrack', nextSong);
 		}
-	}, [playPause, nextSong, prevSong])
+	}, [playPause, nextSong, prevSong]);
 
 	useEffect(() => {
-		audioRef.current.volume = (volume / 100).toFixed(2)
-	}, [volume, audioRef])
+		const audio = audioRef.current;
+		if (audio) audio.volume = (volume / 100).toFixed(2);
+	}, [volume, audioRef.current]);
 
-	const updateTrackTime = () => {
-		setTrackTime(
-			audioRef.current.currentTime ? audioRef.current.currentTime : 0
-		)
-		getCurrentTime()
-	}
+	useEffect(() => {
+		const currentTime = (progress * duration) / 100;
+		const timeStr = timeToStr(currentTime);
+		setCurrentTimeStr(timeStr);
+	}, [progress]);
+
+
+	const onTrackTimeUpdate = () => {
+		const audio = audioRef.current;
+		if (audio) {
+			setProgress((audio.currentTime / duration) * 100);
+		}
+	};
 
 	const onChangeTrackTime = (e) => {
-		audioRef.current.currentTime = e.target.value
-	}
+		if (e.target.value === undefined) return;
+		const newCurrentTime = (e.target.value / 100 * duration);
+		setProgress(e.target.value);
+		setCurrentTime(newCurrentTime);
+	};
 
 	const onChangeVolume = (e) => {
-		setVolume(e.target.value)
-		localStorage.setItem('volume', e.target.value)
+		setVolume(e.target.value);
+		localStorage.setItem('volume', e.target.value);
+	};
+
+	const setCurrentTime = (newCurrentTime) => {
+		const audio = audioRef.current;
+		if (audio) {
+			audio.currentTime = newCurrentTime;
+		}
 	}
 
 	const strPadLeft = (string, pad) => {
-		return (new Array(3).join(pad) + string).slice(-2)
-	}
-
-	const getDurationTime = () => {
-		const minutes = Math.floor(audioRef.current.duration / 60)
-		const seconds = Math.floor(audioRef.current.duration - minutes * 60)
-		const time = strPadLeft(minutes, '0') + ':' + strPadLeft(seconds, '0')
-		setDurationTime(time)
-	}
-
-	const getCurrentTime = () => {
-		const minutes = Math.floor(audioRef.current.currentTime / 60)
-		const seconds = Math.floor(audioRef.current.currentTime - minutes * 60)
-		const time = strPadLeft(minutes, '0') + ':' + strPadLeft(seconds, '0')
-		setCurrentTime(time)
+		return (new Array(3).join(pad) + string).slice(-2);
 	};
 
+	const timeToStr = (timeValue) => {
+		const minutes = Math.floor(timeValue / 60);
+		const seconds = Math.floor(timeValue - minutes * 60);
+		return strPadLeft(minutes, '0') + ':' + strPadLeft(seconds, '0');
+	};
+
+	const getDurationTime = () => {
+		const audio = audioRef.current;
+		if (audio) {
+			setDuration(audio.duration);
+			const timeStr = timeToStr(audio.duration);
+			setDurationTimeStr(timeStr);
+		}
+	};
 
 	const onClickHideButton = () => {
-		setIsHidden(prev => !prev)
+		setIsHidden(prev => !prev);
+	};
+
+	if (!currentTrack.title) {
+		return (<div></div>);
 	}
 
-	if (!currentTrack) return <div></div>
 	return (
 		<nav className={`track-controller ${isHidden ? "hidden" : ""}`}>
 			<button className="hide-button" onClick={onClickHideButton}>{isHidden ? "↑" : "↓"}</button>
-			<audio
-				src={
-					currentTrack.audio_file_name
-						? `${API_URL + FILE_ENDPOINT}/${currentTrack.audio_file_name}`
-						: ''
-				}
-				onEnded={() => dispatch(toNextTrack())}
-				onLoadedMetadata={getDurationTime}
-				ref={audioRef}
-				onTimeUpdate={updateTrackTime}
-			></audio>
+			<audio ref={audioRef} onTimeUpdate={onTrackTimeUpdate} onLoadedMetadata={getDurationTime} onEnded={nextSong}>
+				<source src={FileService.getUrlToFile(currentTrack.audio_file_name) || FileService.getDefaultImageUrl()}
+								type="audio/mp3"/>
+			</audio>
 
-			<div className="controls">
-				<button
-					onClick={prevSong}
-					className="left-next hide-text"
-				>
-					<span>previous track</span>
-				</button>
-				<button
-					className="play-btn hide-text"
-					onClick={playPause}
-				>
-					<span className={paused ? 'play-img' : 'pause-img'}>play</span>
-				</button>
-				<button
-					onClick={nextSong}
-					className="right-next hide-text"
-				>
-					<span>next track</span>
-				</button>
-			</div>
-
-			<div className="track-info">
+			<div className="track-controller__track-info">
 				<img
-					src={`${API_URL + FILE_ENDPOINT}/${
-						currentTrack.image_file_name
-							? currentTrack.image_file_name
-							: 'music.png'
-					}`}
-					alt=""
-					width={70}
-					height={70}
+					src={FileService.getUrlToFile(currentTrack.image_file_name) || FileService.getDefaultImageUrl()}
+					alt={""}
+					width={60}
+					height={60}
 				/>
 				<div className="track-description">
-					<h2>{currentTrack.title}</h2>
-					<div>
-						{currentTrack.artists &&
-							currentTrack.artists.map((artist) => artist.name).join(', ')}
+					<div className="track-description__title-container" ref={titleContainerRef}>
+						<div className={`track-description__title ${titleScroll ? "scroll-text" : ""}`}
+								 ref={titleTextRef}>{currentTrack.title}
+						</div>
+					</div>
+					<div className="track-description__artists-container" ref={artistsContainerRef}>
+						<ArtistList artists={currentTrack.artists}/>
 					</div>
 				</div>
 			</div>
 
-			<div className="audio-time-controller">
-				<label
-					htmlFor="timeline-range"
-					className="hide-text"
-				>
-					Ползунок времени трека
-				</label>
+			<div className="track-controller__controller">
 				<input
 					type="range"
-					id="timeline-range"
-					value={trackTime}
-					max={audioRef.current?.duration ? audioRef.current.duration : 99}
+					min={0}
+					max={100}
+					step={0.1}
+					value={progress}
 					onChange={onChangeTrackTime}
 				/>
-				<div className="times">
-					<b>{currentTime}</b>
-					<b>{durationTime}</b>
+
+				<div className="track-controller__controls">
+					<b>{currentTimeStr}</b>
+					<div className="controls">
+						<button
+							onClick={prevSong}
+							className="left-next hide-text"
+						>
+							<div></div>
+						</button>
+						<button
+							className="play-btn hide-text"
+							onClick={playPause}
+						><span className={paused ? "play-img" : "pause-img"}/></button>
+						<button
+							onClick={nextSong}
+							className="right-next hide-text"
+						>
+							<div></div>
+						</button>
+					</div>
+					<b>{durationTimeStr}</b>
 				</div>
 			</div>
 
-			<div className="controls">
-				<label
-					htmlFor="volume-range"
-					className="hide-text"
-				>
-					Ползунок звука
-				</label>
+			<div className="volume-controls">
 				<input
 					id="volume-range"
 					type="range"
 					defaultValue={volume}
-					onChangeCapture={onChangeVolume}
+					onChange={onChangeVolume}
 				/>
-				<span
-					className="volume-value"
-					style={{left: `${volume - -4}px`}}
-				>
+				<span className="volume-value">
           {volume}%
         </span>
-
-				<button className="three-dot-btn hide-text">
-					<div className="three-dot">settings</div>
-				</button>
 			</div>
 		</nav>
-	)
+	);
 }
 
-export default TrackController
+export default TrackController;

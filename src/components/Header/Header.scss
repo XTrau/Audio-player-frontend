@@ -1,81 +1,192 @@
 header {
   width: 100%;
-  background: linear-gradient(135deg, #7a7af5, #00a4be);
+  background: var(--background-block-color);
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
 
-  display: grid;
-  grid-template-columns: min-content auto 40% 10%;
-  gap: 100px;
-
-  padding: 10px 30px;
+  padding: 20px 40px;
 
   user-select: none;
   z-index: 99;
 
-  span {
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 400;
-
-    &::after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: black;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s;
-    }
-
-    &:hover {
-      &::after {
-        transform: scaleX(1);
-      }
-    }
-  }
-
   .header-logo {
-    align-self: center;
-  }
-
-  .navigation {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-
-    #main {
-      font-size: 20px;
-    }
-
-    span {
-      font-size: 18px;
+    #site-logo {
+      font-size: 32px;
+      font-weight: bolder;
     }
   }
 
   .user-nav {
+    display: flex;
+    align-items: center;
     position: relative;
     justify-self: right;
+    height: 22px;
+    cursor: pointer;
+
+    #three-line-button {
+      width: 28px;
+      height: 2px;
+      background: var(--second-text-color);
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--second-text-color);
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--second-text-color);
+      }
+    }
+
+    &:hover {
+      #three-line-button {
+        background: var(--main-text-color);
+
+        &:before {
+          background: var(--main-text-color);
+        }
+
+        &:after {
+          background: var(--main-text-color);
+        }
+      }
+    }
   }
 
   .search-section {
-    align-self: center;
-
-    .search, .search-button {
-      padding: 10px;
-      font-size: 18px;
-
-    }
+    position: relative;
+    display: flex;
+    width: 700px;
 
     .search {
-      width: 60%;
-      border-radius: 5px 0 0 5px;
+      padding: 5px 3px;
+      background: none;
+      font-size: 20px;
+      width: 100%;
+      border-bottom: 1px solid var(--background-second-elements-color);
+
+      &:focus {
+        border-bottom: 1px solid rgb(188, 83, 39);
+      }
     }
 
     .search-button {
-      border-radius: 0 5px 5px 0;
-      background: #287b84;
-      color: white;
+      position: absolute;
+      bottom: 2px;
+      right: 3px;
+
+      &:hover {
+        path {
+          stroke: var(--main-text-color);
+        }
+      }
+
+      &:active {
+        path {
+          stroke: var(--second-text-color);
+        }
+      }
+    }
+  }
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 98;
+}
+
+.right-menu {
+  position: absolute;
+  background: var(--background-block-color);
+  right: 0;
+  width: 250px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: 200ms transform ease-in-out;
+  z-index: 99;
+
+  padding: 25px 10px;
+
+  &.active {
+    transform: translateX(0);
+  }
+
+  .right-menu-item {
+    padding: 5px;
+    &:hover {
+      background: var(--background-second-elements-color);
     }
   }
 
+  .logout {
+    color: red;
+    cursor: pointer;
+  }
+
+  .user-mini-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+
+    gap: 5px;
+    padding: 5px 3px;
+
+    border-radius: 5px;
+
+
+    img {
+      background: var(--main-text-color);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .user-description {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      overflow: hidden;
+
+      .user-username {
+        max-width: 150px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .user-role {
+        text-overflow: ellipsis;
+        color: var(--second-text-color);
+      }
+
+    }
+  }
+
+  .dashed-line {
+    border-bottom: 2px var(--second-text-color) dashed;
+    margin: 5px 0;
+  }
 }
+
+

@@ -1,24 +1,26 @@
 .auth-page {
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 .auth-wrapper {
   display: flex;
   flex-direction: column;
-  box-shadow: 1px 1px 10px #aaaaaa;
+  box-shadow: 1px 1px 10px var(--background-second-elements-color);
   gap: 10px;
   padding: 2rem;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--background-second-elements-color);
   border-radius: 10px;
 }
 
 .auth-input {
+  color: var(--main-text-color);
   font-size: 1rem;
   padding: 15px 10px;
   border: 1px solid black;
+  background: var(--background-second-elements-color);
   border-radius: 10px;
   width: 300px;
 }
@@ -26,9 +28,8 @@
 .auth-button {
   font-size: 1rem;
   padding: 10px;
-  border: 1px solid black;
   border-radius: 10px;
-  color: white;
+  color: var(--background-elements-color);
   background: #21bf21;
   width: 100%;
 

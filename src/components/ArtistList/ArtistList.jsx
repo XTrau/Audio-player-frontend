@@ -1,36 +1,25 @@
-import React from 'react';
 import "./ArtistList.scss"
-import { FileService } from "../../services/fileService.js";
 
-function ArtistList({artists, artistClickHandler}) {
-	const onArtistClickHandler = (e, artist) => {
-		artistClickHandler(artist);
+import React from 'react';
+import { Link } from "react-router-dom";
+
+function ArtistList({artists}) {
+	if (!artists?.length) {
+		return <></>
 	}
 
-	if (!artists?.length) return (<></>);
-
 	return (
-		<ul className="album-artist-list">
-			{artists.map((artist, index) => {
-				return (
-					<div key={artist.id}>
-						<button
-							onClick={(e) => onArtistClickHandler(e, artist)}
-							className="mini-artist"
-						>
-							<img
-								className="mini-artist__image"
-								src={FileService.getUrlToFile(artist.image_file_name) || FileService.getDefaultImageUrl(artist.image_file_name)}
-								width={30}
-								height={30}
-							/>
-							<span>{artist.name}</span>
-						</button>
-					</div>
-				);
-			})}
+		<ul className="artist-list">
+			{artists.map((artist, index) => (
+				<>
+					<li key={index} className="artist-list-item">
+						<Link to={`/artist/${artist.id}`}>{artist.name}</Link>
+					</li>
+					{index !== artists.length - 1 && <span>,</span>}
+				</>
+			))}
 		</ul>
-	)
+	);
 }
 
 export default ArtistList;
