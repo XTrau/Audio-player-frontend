@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AlbumPage from "./pages/Album/AlbumPage/AlbumPage.jsx";
 import MyMusicPage from "./pages/MyMusicPage/MyMusicPage.jsx";
 import { fetchLikedTrackIds } from "./store/slices/favouriteListReducer.js";
+import About from "./pages/About/About.jsx";
 
 function App() {
 	const dispatch = useDispatch();
@@ -65,6 +66,15 @@ function App() {
 					path="/my_music"
 					element={<MyMusicPage/>}
 				/>
+				<Route
+					path="/create_playlist"
+					element={<MyMusicPage/>}
+				/>
+				<Route
+					path="/playlist/:playlist_id"
+					element={<MyMusicPage/>}
+				/>
+				<Route path="/about" element={<About/>}/>
 			</Routes>
 		</Layout>
 	</>)

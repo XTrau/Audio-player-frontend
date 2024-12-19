@@ -1,6 +1,5 @@
 import "./ArtistList.scss"
 
-import React from 'react';
 import { Link } from "react-router-dom";
 
 function ArtistList({artists}) {
@@ -11,12 +10,12 @@ function ArtistList({artists}) {
 	return (
 		<ul className="artist-list">
 			{artists.map((artist, index) => (
-				<>
-					<li key={index} className="artist-list-item">
+				<span key={artist.id}>
+					<li className="artist-list-item">
 						<Link to={`/artist/${artist.id}`}>{artist.name}</Link>
 					</li>
 					{index !== artists.length - 1 && <span>,</span>}
-				</>
+				</span>
 			))}
 		</ul>
 	);

@@ -4,12 +4,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserService } from "../../services/userService.js";
 import TrackList from "../../components/TrackList/TrackList.jsx";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function MyMusicPage() {
 	const [trackList, setTrackList] = useState([]);
 	const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 	const [loading, setLoading] = useState(false);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchTrackList = async () => {
@@ -33,14 +35,7 @@ function MyMusicPage() {
 	}
 
 	if (!isAuthenticated) {
-		return (
-			<div className="my-music-page">
-				<div>
-					Необходимо пройти аунтефикацию
-				</div>
-				<Link to="/login">Войти</Link>
-			</div>
-		)
+		navigate("/login");
 	}
 
 	if (trackList.length === 0) {
